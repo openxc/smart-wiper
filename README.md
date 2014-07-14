@@ -44,24 +44,24 @@ In order to assemble the box, follow these steps:
 
 1. Follow the electrical circuit design above to solder and connect the electronic components. 
 
-1. Place the bluetooth-module to the bottom of the box, the soldered joints are right below two holes of the box.
+2. Place the bluetooth-module to the bottom of the box, the soldered joints are right below two holes of the box.
    
 ![step2](https://github.com/openxc/smart-wiper/raw/master/Docs/step2.JPG)
 
-1. Place the arduino pro mini above the bluetooth module and fix it to the slots.
+3. Place the arduino pro mini above the bluetooth module and fix it to the slots.
 
-![step3](https://github.com/openxc/smart-wiper/raw/master/Docs/step2.JPG)
+![step3](https://github.com/openxc/smart-wiper/raw/master/Docs/step3.JPG)
 
-1. Next place the triple-axis accelerometer onto the two holes and fix it;   
+4. Next place the triple-axis accelerometer onto the two holes and fix it;   
    **[[Insert Image]]**
 
-1. Once the accelerometer is firmly secured grab the insert plate and place it onto the arduino-pro-mini and cover it.
+5. Once the accelerometer is firmly secured grab the insert plate and place it onto the arduino-pro-mini and cover it.
   **[[Insert Image]]**
 
-1. Put the battery-USB-charger onto the insert plate and fix it, the USB interface of the charger should fit the interface hole of the box;
+6. Put the battery-USB-charger onto the insert plate and fix it, the USB interface of the charger should fit the interface hole of the box;
   **[[Insert Image]]**
   
-1. Finally, put the Li-ion battery onto the internal side of lid, close the lid and fix it. Note: For a waterproof seal use the silicone adhesive around the lid.
+7. Finally, put the Li-ion battery onto the internal side of lid, close the lid and fix it. Note: For a waterproof seal use the silicone adhesive around the lid.
   **[[Insert Image]]**
   
 ## **Arduino**
