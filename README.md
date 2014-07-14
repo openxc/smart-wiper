@@ -18,6 +18,8 @@ The project contains:
 * Smart Wiper Box (see 3D CAD files here)
 * Electrical components (see BOM here)
 
+![hardware](https://github.com/openxc/smart-wiper/raw/master/Docs/components.JPG)
+
 **Software**
 
 * Android SDK
@@ -63,7 +65,7 @@ In order to assemble the box, follow these steps:
 ## **Arduino**
 Once all the electronics are soldered and placed, we will upload the firmware on to the arduino. To upload the firmware you need a 3.3V USB FTDI cable, that has a standard male USB on its other end.
 
- **[[Insert Image]]**
+![ftdi](https://github.com/openxc/smart-wiper/raw/master/Docs/ftdi.JPG)
  
 The Arduino firmware calculates and sends the information about current states of the wiper to Android devices over bluetooth. It receives raw data of acceleration rates in three axes from a triple axis accelerometer, calculates the variances of acceleration in all three axes and decides if the wiper is moving and at which speed mode based on the values of variances. More details on the algorithm and the scope is discussed in details [here](https://github.com/openxc/smart-wiper/tree/master/Arduino)
 
