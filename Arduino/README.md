@@ -11,7 +11,7 @@ The Arduino firmware calculates and sends the information about current states o
 
 In order to recognize different states of the wiper (wiping/non-wiping, wiping speed), the algorithm makes use of the statistic differences of acceleration data collected from accelerometer. From the plot below, the variance of XY-Theta (defined as atan2(acceleration in X axis, acceleration in Y axis)) and the variance of acceleration in Z axis perform very unique patterns. 
 
-![Wiping Waves](https://raw.github.com/openxc/smart-wiper/tree/master/Arduino/Docs/wipingwaves.jpg)
+![Wiping Waves](https://raw.github.com/openxc/smart-wiper/tree/master/Arduino/Docs/wipingwaves.JPG)
 
 Mathematically the variance can be calculated in two steps: firstly calculate the differences between single data and the average value, then square these differences to make it always positive. To get the average value without storing data in an array (it slows down the program), we use reference value as the average: we calculate the average values of 50 points at the beginning of each loop and assign them to reference variables (refX, refY and refZ). 
 
