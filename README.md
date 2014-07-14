@@ -45,10 +45,12 @@ In order to assemble the box, follow these steps:
 1. Follow the electrical circuit design above to solder and connect the electronic components. 
 
 1. Place the bluetooth-module to the bottom of the box, the soldered joints are right below two holes of the box.
-   **[[Insert Image]]**
+   
+![step2](https://github.com/openxc/smart-wiper/raw/master/Docs/step2.JPG)
 
 1. Place the arduino pro mini above the bluetooth module and fix it to the slots.
-   **[[Insert Image]]**
+
+![step3](https://github.com/openxc/smart-wiper/raw/master/Docs/step2.JPG)
 
 1. Next place the triple-axis accelerometer onto the two holes and fix it;   
    **[[Insert Image]]**
