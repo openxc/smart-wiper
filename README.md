@@ -40,24 +40,24 @@ The image below shows the overall circuit layout
 
 In order to assemble the box, follow these steps: 
 
-1) Follow the electrical circuit design above to solder and connect the electronic components. 
+1. Follow the electrical circuit design above to solder and connect the electronic components. 
 
-2) Place the bluetooth-module to the bottom of the box, the soldered joints are right below two holes of the box.
+1. Place the bluetooth-module to the bottom of the box, the soldered joints are right below two holes of the box.
    **[[Insert Image]]**
 
-3) Place the arduino pro mini above the bluetooth module and fix it to the slots.
+1. Place the arduino pro mini above the bluetooth module and fix it to the slots.
    **[[Insert Image]]**
 
-4) Next place the triple-axis accelerometer onto the two holes and fix it;   
+1. Next place the triple-axis accelerometer onto the two holes and fix it;   
    **[[Insert Image]]**
 
-5) Once the accelerometer is firmly secured grab the insert plate and place it onto the arduino-pro-mini and cover it.
+1. Once the accelerometer is firmly secured grab the insert plate and place it onto the arduino-pro-mini and cover it.
   **[[Insert Image]]**
 
-6) Put the battery-USB-charger onto the insert plate and fix it, the USB interface of the charger should fit the interface hole of the box;
+1. Put the battery-USB-charger onto the insert plate and fix it, the USB interface of the charger should fit the interface hole of the box;
   **[[Insert Image]]**
   
-7) Finally, put the Li-ion battery onto the internal side of lid, close the lid and fix it. Note: For a waterproof seal use the silicone adhesive around the lid.
+1. Finally, put the Li-ion battery onto the internal side of lid, close the lid and fix it. Note: For a waterproof seal use the silicone adhesive around the lid.
   **[[Insert Image]]**
   
 ## **Arduino**
@@ -70,14 +70,13 @@ The Arduino firmware calculates and sends the information about current states o
 
 ## **Android**
 
-The primary purpose of the android application is to works by initially establishing a bluetooth connection with a previously paired device, then listening for data being sent from that device. The application can also send messages to the device over bluetooth. As soon as a bluetooth connection is opened with the device, all of the data received by the android device from the Ardruino. 
+The primary purpose of the android application is to establish a bluetooth connection with the bluetooth-module and gather data from the box sent over bluetooth.  In order to use the application, first go into the bluetooth setting of your android device, and pair to the Arduino in the Smart Wiper Box. 
+
  **[[Insert Image]]**
- 
-In order to use the application, first go into the bluetooth setting of your android device, and pair to the Arduino in the Smart Wiper Box. 
 
 ## **Installation Instruction**
 
-In order to install Smart Wiper Box onto the wiper of your car, you firstly make a piece of sticky back band through the two slots on the lid of box, and then fix the band onto the arm of wiper, which is roughly six inches from the bottom of the wiper. The bottom of box should face down to the wiper arm and the lid should face up. Make sure the box is attached onto the wiper arm tightly enough. And now, you can drive your car with the Smart Wiper Box! 
+For installation of the Smart-Wiper Box onto the wiper of your car, you firstly make a piece of sticky back band through the two slots on the lid of box, and then fix the band onto the arm of wiper, which is roughly six inches from the bottom of the wiper. The bottom of box should face down to the wiper arm and the lid should face up. Make sure the box is attached onto the wiper arm tightly enough. And now, you can drive your car with the Smart Wiper Box! 
 
 
 ## **Testing Condition**
