@@ -39,7 +39,7 @@ The Smart wiper box includes:
 
 The image below shows the overall circuit layout
 
-![Circuit](https://github.com/openxc/smart-wiper/raw/master/Docs/SmartWiper_bb.png)
+![Circuit](https://github.com/openxc/smart-wiper/raw/master/Circuit_Design/SmartWiper_bb.png)
 
 
 In order to assemble the box, follow these steps: 
