@@ -16,7 +16,7 @@ The project contains:
 **Hardware**
 
 * Bluetooth-compatible Android device (see list here)
-* Smart Wiper Box (see 3D CAD files here)
+* Smart Wiper Box ([see 3D CAD files here](https://github.com/openxc/smart-wiper/tree/master/CAD))
 * Electrical components ([see BOM here](https://github.com/openxc/smart-wiper/raw/master/BOM.xlsx))
 
 ![hardware](https://github.com/openxc/smart-wiper/raw/master/Docs/components.JPG)
