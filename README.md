@@ -74,7 +74,7 @@ The Arduino firmware calculates and sends the information about current states o
 
 The primary purpose of the android application is to establish a bluetooth connection with the bluetooth-module and gather data from the box sent over bluetooth.  In order to use the application, first go into the bluetooth setting of your android device, and pair to the Arduino in the Smart Wiper Box. 
 
- **[[Insert Image]]**
+ ![smartwiperbox](https://github.com/openxc/smart-wiper/raw/master/Docs/android.png)
 
 ## **Installation Instruction**
 
