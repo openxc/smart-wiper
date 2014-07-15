@@ -8,44 +8,49 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ford.svl.connectedwiper.MainActivity$PlaceholderFragment" >
 
-   <TextView
-        android:id="@+id/status"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Type here:"/>
-    <EditText
-        android:id="@+id/entry"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/editbox_background"
-        android:layout_below="@id/status"/>
-    <Button
-        android:id="@+id/connect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/entry"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dip"
-        android:text="Connect Bluetooth" />
-    <Button
-        android:id="@+id/send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/connect"
-        android:layout_alignTop="@id/connect"
-        android:text="Send Data" />
-    <Button
-        android:id="@+id/disconnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/send"
-        android:layout_alignTop="@id/send"
-        android:text="Disconnect Bluetooth" />
+      <Button
+          android:id="@+id/disconnect"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/connect"
+          android:text="Disconnect Bluetooth" />
+
       <TextView
-        android:id="@+id/wiper"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/disconnect"
-        android:text="Wiper Status:"/>
+          android:id="@+id/btStatus"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/connect"
+          android:layout_marginTop="98dp"
+          android:text="Bluetooth Status: "
+          android:textSize="20sp" />
+
+      <TextView
+          android:id="@+id/wiper"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@+id/btStatus"
+          android:layout_alignLeft="@+id/btStatus"
+          android:layout_marginBottom="33dp"
+          android:text="OpenXC Wiper Status:"
+          android:textSize="20sp" />
+
+      <TextView
+          android:id="@+id/status"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_above="@+id/wiper"
+          android:layout_alignLeft="@+id/wiper"
+          android:layout_marginBottom="12dp"
+          android:text="Wiper Status: "
+          android:textSize="20sp" />
+
+      <Button
+          android:id="@+id/connect"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/disconnect"
+          android:layout_below="@+id/btStatus"
+          android:layout_marginTop="13dp"
+          android:text="Connect Bluetooth" />
     
 </RelativeLayout>

@@ -41,7 +41,7 @@ import android.content.ServiceConnection;
 public class MainActivity extends Activity {
 	static final String TAG = "Main Activity";
 	TextView status;
-    EditText infoBox;
+	TextView btStatus;
     BluetoothAdapter mBluetoothAdapter;
     BluetoothSocket socket;
     BluetoothDevice device;
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 	TextView wiperStatus;
 	String filename = "wiper_data";
     //FileOutputStream fileOutputStream;
-    FileManager fileManager = new FileManager();
+    FileManager fileManager = new FileManager("wiper_data");
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,11 +65,13 @@ public class MainActivity extends Activity {
         
         
         Button connect = (Button) findViewById(R.id.connect);
-        Button send = (Button) findViewById(R.id.send);
+       // Button send = (Button) findViewById(R.id.send);
         Button disconnect = (Button) findViewById(R.id.disconnect);
         status = (TextView) findViewById(R.id.status);
-        infoBox = (EditText) findViewById(R.id.entry);
+       // infoBox = (EditText) findViewById(R.id.entry);
         wiperStatus = (TextView) findViewById(R.id.wiper);
+    	 btStatus = (TextView) findViewById(R.id.btStatus);
+
         
         /* When "Connect" button is pressed
          * 
@@ -91,7 +93,7 @@ public class MainActivity extends Activity {
          * 
          * Calls the send data method to send the message in the input box
          * 
-         */     
+           
         send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
@@ -100,7 +102,7 @@ public class MainActivity extends Activity {
             }
         });
         
-        /* When "Disconnect" button is pressed
+         When "Disconnect" button is pressed
          * 
          * Disconnects from blue
          * Starts receiving data
@@ -147,6 +149,7 @@ public class MainActivity extends Activity {
     	}
     }
     
+    
     /*Connects to bluetooth device
      * 
      * Checks to see if android device is BT compatible
@@ -159,7 +162,7 @@ public class MainActivity extends Activity {
        
         //Check to see if device is bluetooth capable
         if(mBluetoothAdapter == null) {
-            status.setText("No bluetooth adapter available");
+            btStatus.setText("Bluetooth Status: No bluetooth adapter available");
         }
         
         //Enable bluetooth if it is not already enabled
@@ -180,8 +183,9 @@ public class MainActivity extends Activity {
                 }
             }
         }
-        status.setText("Bluetooth Device Found");
+        btStatus.setText("Bluetooth Status: Bluetooth Device Found");
     }
+    
     
     /*Starts bluetooth connection
      * 
@@ -202,7 +206,7 @@ public class MainActivity extends Activity {
         recieveData();
         
         
-        status.setText("Bluetooth Opened");
+        btStatus.setText("Bluetooth Status: Bluetooth Opened");
     }
     
     /*Handles received data
@@ -264,7 +268,7 @@ public class MainActivity extends Activity {
      * Puts the bytes in a buffer
      * Sends the data over the output stream
      * 
-     */
+     
     void sendData() throws IOException {
     	String msg = infoBox.getText().toString(); //Get the input from the box
         Log.i(TAG, "text form box");
@@ -276,6 +280,8 @@ public class MainActivity extends Activity {
         Log.i(TAG, "data sent ");
         status.setText("Data Sent");
     }
+    */
+    
     
     /*Closes all of the connections and disconnect from the device
      * 
@@ -288,7 +294,7 @@ public class MainActivity extends Activity {
         outputStream.close();
         inputStream.close();
         socket.close();
-        status.setText("Bluetooth Closed");
+        btStatus.setText("Bluetooth Status: Bluetooth Closed");
     }
     
     WindshieldWiperStatus.Listener wiperListener = new WindshieldWiperStatus.Listener() {
