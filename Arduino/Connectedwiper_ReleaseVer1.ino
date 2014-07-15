@@ -10,9 +10,7 @@
 
 #define PERIOD 10000 // milliseconds for each measurement
 #define THRESHOLD_XY 0.05 // threshold of varAngle value between wiping/non-wiping states
-#define THRESHOLD_Z 20000 // threshold of varZ value between wiping/non-wiping states
-#define MEDIUM_SPEED 6 // threshold speed between slow wiping mode and regular wiping mode
-#define FAST_SPEED 12 // threshold speed between regular wiping mode and fast wiping mode
+#define THRESHOLD_Z 10000 // threshold of varZ value between wiping/non-wiping states
 
 int axisX = 0; // measures value of X axis
 int axisY = 0; // measures value of Y axis
@@ -93,12 +91,8 @@ void loop()
   }  
   
   // outputs the wiping states based on the counted number
-  if (countVarXY >= FAST_SPEED && countVarZ >= FAST_SPEED) {
-    bluetooth.println("The wiper is in the FAST mode in last 10 seconds.");
-  } else if (countVarXY >= MEDIUM_SPEED && countVarZ >= MEDIUM_SPEED) {
-    bluetooth.println("The wiper is in the REGULAR mode in last 10 seconds.");
-  } else if (countVarXY > 0 && countVarZ > 0) {
-    bluetooth.println("The wiper is in the SLOW mode in last 10 seconds.");
+  if (countVarXY > 0 && countVarZ > 0) {
+    bluetooth.println("The wiper is ON in last 10 seconds.");
   } else {
     bluetooth.println("The wiper is OFF in last 10 seconds.");
   }

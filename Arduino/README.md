@@ -1,7 +1,7 @@
 **Arduino firmware for the Smart Wiper**
 ===================================
 
-Once all the electronics are soldered and placed, we will upload the firmware on to the arduino. To upload the firmware you need a FTDI cable, that has a standard male USB on its other end.
+Once all the electronics are soldered and placed, we will upload the firmware on to the arduino. To upload the firmware you need a FTDI (3.3V) cable, that has a standard male USB on its other end. Notice that all pins must connect to corresponding pins of the board.
 
 ![ftdi](https://github.com/openxc/smart-wiper/raw/master/Docs/ftdi.JPG)
  
@@ -15,6 +15,6 @@ In order to recognize different states of the wiper (wiping/non-wiping, wiping s
 
 Mathematically the variance can be calculated in two steps: firstly calculate the differences between single data and the average value, then square these differences to make it always positive. To get the average value without storing data in an array (it slows down the program), we use reference value as the average: we calculate the average values of 50 points at the beginning of each loop and assign them to reference variables (refX, refY and refZ). 
 
-Basically the algorithm works in the following way: if any of the characteristic variances are smaller than the critical values (currently, we set these values 0.05 for XY-Theta and 20000 for Z axis) in a set period (10 seconds right now), the microcontroller will send OFF signal to Android application over bluetooth; Otherwise, the microcontroller will decide at which speed the wiper is wiping based on the frequency of variance peaks (currently, we set 1-6 for SLOW mode, 7-13 for REGULAR mode and 14 or larger for FAST mode in a period of 10 seconds) and send the corresponding signal to application over bluetooth.
+Basically the algorithm works in the following way: if any of the characteristic variances are smaller than the critical values (currently, we set these values 0.05 for XY-Theta and 20000 for Z axis) in a set period (10 seconds right now), the microcontroller will send OFF signal to Android application over bluetooth; Otherwise, the microcontroller will send ON signal to Android application. In the next version of Arduino firmware, the micro-controller can decide at which speed the wiper is wiping based on the frequency of variance peaks  and send the corresponding signal to application over bluetooth.
 
-In order to connect Arduino Pro Mini board to computer, you need a 3.3V USB FTDI. Notice that all pins must connect to corresponding pins of the board.
+
