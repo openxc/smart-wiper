@@ -84,3 +84,7 @@ For installation of the Smart-Wiper Box onto the wiper of your car, you firstly 
 ## **Testing Condition**
 
 The Smart Wiper Box was tested on the wiper of Ford Focus Titanium 2012 around Palo Alto, CA, at the speed range of 0-50 mph, under different road conditions: urban roads, campus roads and parking areas, and under different driving conditions: smooth style, rapid style, and extremely braking and turning. 
+
+![test1](https://github.com/openxc/smart-wiper/raw/master/Docs/test1.JPG)
+
+![test2](https://github.com/openxc/smart-wiper/raw/master/Docs/test2.JPG)
