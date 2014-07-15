@@ -4,10 +4,10 @@
 The Smart Wiper project provides a mean for collecting data on rain frequency and/or intensity. A 3D printed enclosure or 'box' houses an inertial measurement unit that can be attached to the windshield wiper. The device monitors the change in acceleration of the windshield wiper and use that as a surrogate for rain detection and intensity. 
 The project contains:
 
-* Electronics Layout: The circuit diagram and all necessary electronics for the box
-* Arduino Firmware: The arduino firmware that converts acceleration data into a generic wiper movement data
-* Android Project: That communicates with the electronics box over bluetooth and provides a simple UI to display that
-* 3D printed enclosure: CAD files for the box, for 3D printing the box
+* [Electronics Layout](https://github.com/openxc/smart-wiper/tree/master/Circuit_Design): The circuit diagram and all necessary electronics for the box
+* [Arduino Firmware](https://github.com/openxc/smart-wiper/tree/master/Arduino): The arduino firmware that converts acceleration data into a generic wiper movement data
+* [Android Project](https://github.com/openxc/smart-wiper/tree/master/Android): That communicates with the electronics box over bluetooth and provides a simple UI to display that
+* [3D printed enclosure](https://github.com/openxc/smart-wiper/tree/master/CAD): CAD files for the box, for 3D printing the box
 
 ![smartwiperbox](https://github.com/openxc/smart-wiper/raw/master/Docs/smartwiperbox.JPG)
 
