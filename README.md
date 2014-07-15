@@ -57,7 +57,7 @@ In order to assemble the box, follow these steps:
 
 6. Put the battery-USB-charger onto the insert plate and fix it, the USB interface of the charger should fit the interface hole of the box;
   
-7. Finally, put the Li-ion battery onto the internal side of lid, close the lid and fix it. Note: For a waterproof seal use the silicone adhesive around the lid.
+7. Finally, put the Li-ion battery onto the internal side of lid, close the lid and fix it. Note: For a waterproof seal use the silicone adhesive around the lid. ![enclosure](https://github.com/openxc/smart-wiper/raw/master/Docs/enclosure.JPG)
   
 ## **Arduino**
 Once all the electronics are soldered and placed, we will upload the firmware on to the arduino. To upload the firmware you need a 3.3V USB FTDI cable, that has a standard male USB on its other end.
