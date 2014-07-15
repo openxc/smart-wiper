@@ -1,7 +1,7 @@
 **Smart Wiper**
 ===============
 
-The Smart Wiper project provides a mean for collecting data on rain frequency and/or intensity. A 3D printed enclosure or 'box' houses an inertial measurement unit that can be attached to the windshield wiper. The device monitors the change in acceleration of the windshield wiper and use that as a surrogate for rain detection and intensity. 
+The Smart Wiper project provides a simple way for collecting data on rain frequency and/or intensity. A 3D printed enclosure or 'box' houses an inertial measurement unit that can be attached to the windshield wiper. The device monitors the change in acceleration of the windshield wiper and use that as a surrogate for rain detection and intensity. 
 The project contains:
 
 * [Electronics Layout](https://github.com/openxc/smart-wiper/tree/master/Circuit_Design): The circuit diagram and all necessary electronics for the box
@@ -32,9 +32,10 @@ The project contains:
 
 The Smart wiper box includes:
   - Arduino Pro Mini board 
-  - Bluetooth module 
-  - Triple axis accelerometer
-  - Li-ion battery with battery USB charger 
+  - Bluetooth-Module 
+  - Triple-Axis Accelerometer
+  - Li-ion battery 
+  - USB-Charger 
   - 3D printed enclosure
 
 The image below shows the overall circuit layout
@@ -44,27 +45,27 @@ The image below shows the overall circuit layout
 
 In order to assemble the box, follow these steps: 
 
-1. Follow the electrical circuit design above to solder and connect the electronic components. 
+1. Take a look at the electrical circuit design shown above to solder and connect all the electronic components. The length of the wires can be determined by how they stack up inside the enclosure. It is good practice to place all the parts and see how they are stacked and placed over each other as detailed between Step 2 and Step 6. 
 
-2. Place the bluetooth-module to the bottom of the box, the soldered joints are right below two holes of the box.
+2. Place the Bluetooth-module at the bottom of the ![3D printed enclosure] (https://github.com/openxc/smart-wiper/tree/master/CAD), the orientation of the Bluetooth-Module should be such that the pins on the module are next to the elevated holes sticking out from the bottom of the box for the Triple-Axis Accelerometer.
    ![step2](https://github.com/openxc/smart-wiper/raw/master/Docs/step2.JPG)
 
-3. Place the arduino pro mini above the bluetooth module and fix it to the slots.![step3](https://github.com/openxc/smart-wiper/raw/master/Docs/step3.JPG)
+3. Place the Arduino Pro Mini above the Bluetooth-Module such that it's front is facing down.
+   ![step3](https://github.com/openxc/smart-wiper/raw/master/Docs/step3.JPG)
 
-4. Next place the triple-axis accelerometer onto the two holes and fix it;   
+4. Next place the Triple-Axis Accelerometer over the Arduino Pro Mini such that the end with holes sits right above the two elevated holes. Once the Accelerometer is placed, it can be held by screws, screwing it to the base. 
 
-5. Once the accelerometer is firmly secured grab the insert plate and place it onto the arduino-pro-mini and cover it.
+5. Once the Triple-Axis Accelerometer is firmly secured grab the insert plate and place it over the Arduino Pro Mini and cover it.
 
-6. Put the battery-USB-charger onto the insert plate and fix it, the USB interface of the charger should fit the interface hole of the box;
+6. Put the USB-Charger onto the insert plate and fix it, the female Micro-USB end of the charger should fit through the hole providing an easy way to charge the battery without taking the box apart.
   
-7. Finally, put the Li-ion battery onto the internal side of lid, close the lid and fix it. Note: For a waterproof seal use the silicone adhesive around the lid. ![enclosure](https://github.com/openxc/smart-wiper/raw/master/Docs/enclosure.JPG)
+7. Finally, put the Li-ion battery on the internal side of lid and fix the lid. Note: For a waterproof seal use the silicone adhesive around the lid. ![enclosure](https://github.com/openxc/smart-wiper/raw/master/Docs/enclosure.JPG)
   
 ## **Arduino**
-Once all the electronics are soldered and placed, we will upload the firmware on to the arduino. To upload the firmware you need a 3.3V USB FTDI cable, that has a standard male USB on its other end.
 
-![ftdi](https://github.com/openxc/smart-wiper/raw/master/Docs/ftdi.JPG)
- 
-The Arduino firmware calculates and sends the information about current states of the wiper to Android devices over bluetooth. It receives raw data of acceleration rates in three axes from a triple axis accelerometer, calculates the variances of acceleration in all three axes and decides if the wiper is wiping based on the values of variances. More details on the algorithm and the scope is discussed in details [here](https://github.com/openxc/smart-wiper/tree/master/Arduino)
+Once all the electronics are soldered and placed, we will upload the firmware on to the Arduino. To upload the firmware you need a FTDI cable, that has a standard male USB on its other end. More information can be found on the Arduino's website on how to upload a program on the [Arduino Pro Mini](http://arduino.cc/en/Guide/ArduinoProMini).
+
+The Arduino firmware calculates and sends the information about the current state of the wiper to an Android device over Bluetooth. The next section provides a starter Android project for coomunication with the box.  The Arduino receives the raw acceleration data from the triple axis accelerometer and calculates the variances along the three axes and determines whether the wiper is turned ON/OFF. More details on the algorithm and the scope is discussed in details [here](https://github.com/openxc/smart-wiper/tree/master/Arduino)
 
 
 ## **Android**
