@@ -9,6 +9,7 @@ The project contains:
 * Android Project: That communicates with the electronics box over bluetooth and provides a simple UI to display that
 * 3D printed enclosure: CAD files for the box, for 3D printing the box
 
+![smartwiperbox](https://github.com/openxc/smart-wiper/raw/master/Docs/smartwiperbox.JPG)
 
 ## **Dependencies**
 
