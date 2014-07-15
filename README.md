@@ -52,16 +52,12 @@ In order to assemble the box, follow these steps:
 3. Place the arduino pro mini above the bluetooth module and fix it to the slots.![step3](https://github.com/openxc/smart-wiper/raw/master/Docs/step3.JPG)
 
 4. Next place the triple-axis accelerometer onto the two holes and fix it;   
-   **[[Insert Image]]**
 
 5. Once the accelerometer is firmly secured grab the insert plate and place it onto the arduino-pro-mini and cover it.
-  **[[Insert Image]]**
 
 6. Put the battery-USB-charger onto the insert plate and fix it, the USB interface of the charger should fit the interface hole of the box;
-  **[[Insert Image]]**
   
 7. Finally, put the Li-ion battery onto the internal side of lid, close the lid and fix it. Note: For a waterproof seal use the silicone adhesive around the lid.
-  **[[Insert Image]]**
   
 ## **Arduino**
 Once all the electronics are soldered and placed, we will upload the firmware on to the arduino. To upload the firmware you need a 3.3V USB FTDI cable, that has a standard male USB on its other end.
