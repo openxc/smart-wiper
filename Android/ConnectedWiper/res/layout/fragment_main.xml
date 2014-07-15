@@ -24,26 +24,6 @@
           android:text="Bluetooth Status: "
           android:textSize="20sp" />
 
-      <TextView
-          android:id="@+id/wiper"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:layout_alignBottom="@+id/btStatus"
-          android:layout_alignLeft="@+id/btStatus"
-          android:layout_marginBottom="33dp"
-          android:text="OpenXC Wiper Status:"
-          android:textSize="20sp" />
-
-      <TextView
-          android:id="@+id/status"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:layout_above="@+id/wiper"
-          android:layout_alignLeft="@+id/wiper"
-          android:layout_marginBottom="12dp"
-          android:text="Wiper Status: "
-          android:textSize="20sp" />
-
       <Button
           android:id="@+id/connect"
           android:layout_width="wrap_content"
@@ -52,5 +32,35 @@
           android:layout_below="@+id/btStatus"
           android:layout_marginTop="13dp"
           android:text="Connect Bluetooth" />
+
+      <TextView
+          android:id="@+id/wiper"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@+id/btStatus"
+          android:layout_alignLeft="@+id/btStatus"
+          android:layout_marginBottom="31dp"
+          android:text="OpenXC Wiper Status:"
+          android:textSize="20sp" />
+
+      <TextView
+          android:id="@+id/status"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/disconnect"
+          android:layout_below="@+id/disconnect"
+          android:layout_centerVertical="true"
+          android:layout_marginTop="102dp"
+          android:text="Wiper Status: "
+          android:textSize="50sp" />
+
+      <Switch
+          android:id="@+id/bluetooth"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignRight="@+id/disconnect"
+          android:layout_below="@+id/disconnect"
+          android:layout_marginTop="20dp"
+          android:text="Bluetooth" />
     
 </RelativeLayout>
