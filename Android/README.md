@@ -7,6 +7,8 @@ In order to use the application, first go into the bluetooth setting of your and
 
 Next navigate to where the application is located in the Android's app drawer and launch the application. Once the application is launched, press the *Connect Bluetooth* button and wait until the dialog says *Bluetooth Opened*. In order to check that a successful bluetooth connection was made, look for a green light on the box. Once this occurs, look at the same dialog, as this is where the data will be displayed. 
 
+If the dialog displays "Bluetooth Opened", then a successful connection was made. If the dialog displays "Bluetooth Device Found", the android device has been paired to the device but a connection was not made.
+
 To send data, type the message into the text box and press *Send Data*. 
 
 In order to close the bluetooth connection, press the *Disconnect Bluetooth* button. This stops all bluetooth communication with the box. 
