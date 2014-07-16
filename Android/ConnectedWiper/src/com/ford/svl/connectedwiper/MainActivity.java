@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.openxc.VehicleManager;
+import com.openxc.measurements.EngineSpeed;
 import com.openxc.measurements.Measurement;
 import com.openxc.measurements.UnrecognizedMeasurementTypeException;
 import com.openxc.measurements.WindshieldWiperStatus;
@@ -25,7 +26,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -42,6 +46,7 @@ public class MainActivity extends Activity {
 	static final String TAG = "Main Activity";
 	TextView status;
 	TextView btStatus;
+	Switch bt;
     BluetoothAdapter mBluetoothAdapter;
     BluetoothSocket socket;
     BluetoothDevice device;
@@ -55,88 +60,77 @@ public class MainActivity extends Activity {
 	private VehicleManager mVehicleManager;
 	TextView wiperStatus;
 	String filename = "wiper_data";
-    //FileOutputStream fileOutputStream;
     FileManager fileManager = new FileManager("wiper_data");
+    boolean checked = false;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       
         setContentView(R.layout.fragment_main);
-        
-        
-        Button connect = (Button) findViewById(R.id.connect);
-       // Button send = (Button) findViewById(R.id.send);
-        Button disconnect = (Button) findViewById(R.id.disconnect);
         status = (TextView) findViewById(R.id.status);
-       // infoBox = (EditText) findViewById(R.id.entry);
         wiperStatus = (TextView) findViewById(R.id.wiper);
-    	 btStatus = (TextView) findViewById(R.id.btStatus);
+    	btStatus = (TextView) findViewById(R.id.btStatus);
+    	bt = (Switch)  findViewById(R.id.bluetooth); 
 
-        
-        /* When "Connect" button is pressed
-         * 
-         * Calls the connectBluetooth method to connect to the device
-         * Starts receiving data
-         * 
-         */        
-        connect.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    connectBluetooth(); //connect to bluetooth device
-                    startBluetooth(); //start recieving data from device
-                    Log.i(TAG, "BT connection");
-                } catch (Exception ex) { }
-            }
-        });
-        
-        /* When "Send" button is pressed
-         * 
-         * Calls the send data method to send the message in the input box
-         * 
-           
-        send.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    sendData(); //send data to arduino
-                } catch (IOException ex) { }
-            }
-        });
-        
-         When "Disconnect" button is pressed
-         * 
-         * Disconnects from blue
-         * Starts receiving data
-         * 
-         */     
-        disconnect.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    disconnectBluetooth(); //disconnect from bluetooth
+    	
+    	bt.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    	    	if(isChecked) {
+    	    			checked = isChecked;
+    	    			 try {
+    	                     connectBluetooth(); //connect to bluetooth device
+    	                     startBluetooth(); //start recieving data from device
+    	                     Log.i(TAG, "BT connection");
+    	                 } catch (Exception ex) { }
+    	             } else {
+    	            	 try {
+    	            		 disconnectBluetooth(); //disconnect from bluetooth
                 	
-                }
-                catch (IOException ex) { }
-            }
-        });
-        	
+    	            	 	}
+    	            	 catch (IOException ex) { }
+    	            }
+    	    	}
+    	});
+        
+    	
         	
     }
     
     @Override
     public void onResume() { 
     	super.onResume();
-    	if(mVehicleManager == null) {
+    	/*if(mVehicleManager == null) {
 			bindService(new Intent(this, VehicleManager.class), mConnection, Context.BIND_AUTO_CREATE);
-		}
+		}*/
+    	if(mVehicleManager == null) {
+            Intent intent = new Intent(this, VehicleManager.class);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        }
     }
     
     @Override
     public void onPause() {
     	super.onPause();
-    	if(mVehicleManager != null) {
+    	
+    	/*if(mVehicleManager != null) {
     		Log.i("openxc", "Unbinding from VehicleManager");
     		unbindService(mConnection);
     		mVehicleManager = null;
-    	}
+    	}*/
+    	
+        if(mVehicleManager != null) {
+            Log.i(TAG, "Unbinding from Vehicle Manager");
+            try {
+                // Remember to remove your listeners, in typical Android
+                // fashion.
+                mVehicleManager.removeListener(WindshieldWiperStatus.class, wiperListener);
+            } catch (VehicleServiceException e) {
+                e.printStackTrace();
+            }
+            unbindService(mConnection);
+            mVehicleManager = null;
+        }
     }
     
     @Override 
@@ -183,7 +177,11 @@ public class MainActivity extends Activity {
                 }
             }
         }
-        btStatus.setText("Bluetooth Status: Bluetooth Device Found");
+        btStatus.setText("Bluetooth Status: Device paired, not connected");
+    	if(bt.isChecked()) {
+    		bt.setChecked(!checked);
+    	};
+
     }
     
     
@@ -243,7 +241,7 @@ public class MainActivity extends Activity {
                                     
                                     handler.post(new Runnable() {
                                         public void run() {
-                                            status.setText(data); //display data
+                                            status.setText("Wiper Status: " +data); //display data
                                             Log.i(TAG, data);
                                         }
                                     });
@@ -291,9 +289,11 @@ public class MainActivity extends Activity {
      */
     void disconnectBluetooth() throws IOException {
         stopWorker = true; 
-        outputStream.close();
-        inputStream.close();
-        socket.close();
+        if(socket.isConnected()) {
+	        outputStream.close();
+	        inputStream.close();
+	        socket.close();
+       }
         btStatus.setText("Bluetooth Status: Bluetooth Closed");
     }
     

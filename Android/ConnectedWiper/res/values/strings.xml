@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Connected Wiper</string>
+    <string name="app_name">SmartWiper</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 

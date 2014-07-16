@@ -6,42 +6,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background = "#000000"
+    
     tools:context="com.ford.svl.connectedwiper.MainActivity$PlaceholderFragment" >
-
-      <Button
-          android:id="@+id/disconnect"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/connect"
-          android:text="Disconnect Bluetooth" />
-
-      <TextView
-          android:id="@+id/btStatus"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:layout_alignLeft="@+id/connect"
-          android:layout_marginTop="98dp"
-          android:text="Bluetooth Status: "
-          android:textSize="20sp" />
-
-      <Button
-          android:id="@+id/connect"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignLeft="@+id/disconnect"
-          android:layout_below="@+id/btStatus"
-          android:layout_marginTop="13dp"
-          android:text="Connect Bluetooth" />
-
-      <TextView
-          android:id="@+id/wiper"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:layout_alignBottom="@+id/btStatus"
-          android:layout_alignLeft="@+id/btStatus"
-          android:layout_marginBottom="31dp"
-          android:text="OpenXC Wiper Status:"
-          android:textSize="20sp" />
 
       <TextView
           android:id="@+id/status"
@@ -52,6 +19,7 @@
           android:layout_centerVertical="true"
           android:layout_marginTop="102dp"
           android:text="Wiper Status: "
+          android:textColor="#F5F5F5"
           android:textSize="50sp" />
 
       <Switch
@@ -61,6 +29,39 @@
           android:layout_alignRight="@+id/disconnect"
           android:layout_below="@+id/disconnect"
           android:layout_marginTop="20dp"
-          android:text="Bluetooth" />
+          android:text="Bluetooth"
+          android:textColor="#F5F5F5"
+          android:textSize="18sp" />
+
+      <TextView
+          android:id="@+id/dataLogging"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/status"
+          android:layout_alignParentBottom="true"
+          android:layout_marginBottom="80dp"
+          android:text="The wiper status data log is being stored in the wiper_data.txt file in Downloads "
+          android:textColor="#F5F5F5" />
+
+      <TextView
+          android:id="@+id/btStatus"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/bluetooth"
+          android:layout_below="@+id/bluetooth"
+          android:text="Bluetooth Status: "
+          android:textColor="#F5F5F5"
+          android:textSize="20sp" />
+
+      <TextView
+          android:id="@+id/wiper"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/btStatus"
+          android:layout_below="@+id/btStatus"
+          android:layout_marginTop="47dp"
+          android:text="OpenXC Wiper Status:"
+          android:textColor="#F5F5F5"
+          android:textSize="20sp" />
     
 </RelativeLayout>
