@@ -178,10 +178,12 @@ public class MainActivity extends Activity {
             }
         }
         btStatus.setText("Bluetooth Status: Device paired, not connected");
-    	if(bt.isChecked()) {
-    		bt.setChecked(!checked);
+    	/*if(bt.isChecked()) {
+    		if(!socket.isConnected()){
+    			bt.setChecked(checked);
+    		}
     	};
-
+*/
     }
     
     
@@ -259,27 +261,7 @@ public class MainActivity extends Activity {
         });
         workerThread.start();
     }
-    
-    /*Sends data over bluetooth
-     * 
-     * Converts the message from the input box into a string then into a byte
-     * Puts the bytes in a buffer
-     * Sends the data over the output stream
-     * 
-     
-    void sendData() throws IOException {
-    	String msg = infoBox.getText().toString(); //Get the input from the box
-        Log.i(TAG, "text form box");
-        msg += "\n";
-        Log.i(TAG, msg);
-        byte [] buffer = msg.getBytes(); //make the message into bytes to send 
-        Log.i(TAG, "data " + outputStream);
-        outputStream.write(buffer); //send the data
-        Log.i(TAG, "data sent ");
-        status.setText("Data Sent");
-    }
-    */
-    
+  
     
     /*Closes all of the connections and disconnect from the device
      * 
