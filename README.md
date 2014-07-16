@@ -54,13 +54,15 @@ In order to assemble the box, follow these steps:
    ![step3](https://github.com/openxc/smart-wiper/raw/master/Docs/step3.JPG)
 
 4. Next place the Triple-Axis Accelerometer over the Arduino Pro Mini such that the end with holes sits right above the two elevated holes. Once the Accelerometer is placed, it can be held by screws, screwing it to the base. 
+   ![step4](https://github.com/openxc/smart-wiper/raw/master/Docs/step4.JPG)
 
 5. Once the Triple-Axis Accelerometer is firmly secured grab the insert plate and place it over the Arduino Pro Mini and cover it.
+  ![usb](https://github.com/openxc/smart-wiper/raw/master/Docs/usb.jpg)
 
 6. Put the USB-Charger onto the insert plate and fix it, the female Micro-USB end of the charger should fit through the hole providing an easy way to charge the battery without taking the box apart.
   
 7. Finally, put the Li-ion battery on the internal side of lid and fix the lid. Note: For a waterproof seal use the silicone adhesive around the lid. ![enclosure](https://github.com/openxc/smart-wiper/raw/master/Docs/enclosure.JPG)
-  
+
 ## **Arduino**
 
 Once all the electronics are soldered and placed, we will upload the firmware on to the Arduino. To upload the firmware you need a FTDI cable, that has a standard male USB on its other end. More information can be found on the Arduino's website on how to upload a program on the [Arduino Pro Mini](http://arduino.cc/en/Guide/ArduinoProMini).
