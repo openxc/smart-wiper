@@ -1,11 +1,7 @@
 **Arduino firmware for the Smart Wiper**
 ===================================
-
-Once all the electronics are soldered and placed, we will upload the firmware on to the arduino. To upload the firmware you need a FTDI (3.3V) cable, that has a standard male USB on its other end. Notice that all pins must connect to corresponding pins of the board.
-
-![ftdi](https://github.com/openxc/smart-wiper/raw/master/Docs/ftdi.JPG)
  
-The Arduino firmware calculates and sends the information about current states of the wiper to Android devices over bluetooth. It receives raw data of acceleration rates in three axes from a triple axis accelerometer, calculates the variances of acceleration in all three axes and decides if the wiper is moving and at which speed mode based on the values of variances. From our tests, it works well for regular driving environment. In some cases, it could be misled by rapid turning and braking (this also means potentially it can be used for judging if a driver is driving dangerously). In the next version, new sensors might be added to the Wiper Box and could provide more data about wiper, and the data analysis would be more accurate by improving algorithm. 
+The Arduino firmware calculates and sends the information about current state of the wiper to Android devices over bluetooth. It receives raw data of acceleration rates in three axes from a triple axis accelerometer, calculates the variances of acceleration in all three axes and decides if the wiper is moving and at which speed mode based on the values of variances. From our tests, it works well for regular driving environment. In some cases, it could be misled by rapid turning and braking (this also means potentially it can be used for judging if a driver is driving dangerously). In the next version, new sensors might be added to the Wiper Box and could provide more data about wiper, and the data analysis would be more accurate by improving algorithm. 
 
 **Algorithm Overview**
 
