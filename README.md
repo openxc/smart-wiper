@@ -53,13 +53,11 @@ In order to assemble the box, follow these steps:
 3. Place the Arduino Pro Mini above the Bluetooth-Module such that it's front is facing down.
    ![step3](https://github.com/openxc/smart-wiper/raw/master/Docs/step3.JPG)
 
-4. Next place the Triple-Axis Accelerometer over the Arduino Pro Mini such that the end with holes sits right above the two elevated holes. Once the Accelerometer is placed, it can be held by screws, screwing it to the base. 
+4. Next place the Triple-Axis Accelerometer over the Arduino Pro Mini such that the end with holes sits right above the two elevated holes. Once the Accelerometer is placed, it can be held by screws, screwing it to the base. Once the Triple-Axis Accelerometer is firmly secured grab the insert plate and place it over the Arduino Pro Mini and cover it. ![step4](https://github.com/openxc/smart-wiper/raw/master/Docs/step4.JPG)
 
-5. Once the Triple-Axis Accelerometer is firmly secured grab the insert plate and place it over the Arduino Pro Mini and cover it.
-
-6. Put the USB-Charger onto the insert plate and fix it, the female Micro-USB end of the charger should fit through the hole providing an easy way to charge the battery without taking the box apart.
+5. Put the USB-Charger onto the insert plate and fix it, the female Micro-USB end of the charger should fit through the hole providing an easy way to charge the battery without taking the box apart. ![usb](https://github.com/openxc/smart-wiper/raw/master/Docs/usb.jpg)
   
-7. Finally, put the Li-ion battery on the internal side of lid and fix the lid. Note: For a waterproof seal use the silicone adhesive around the lid. ![enclosure](https://github.com/openxc/smart-wiper/raw/master/Docs/enclosure.JPG)
+6. Finally, put the Li-ion battery on the internal side of lid and fix the lid. Note: For a waterproof seal use the silicone adhesive around the lid. ![enclosure](https://github.com/openxc/smart-wiper/raw/master/Docs/enclosure.JPG)
   
 ## **Arduino**
 
