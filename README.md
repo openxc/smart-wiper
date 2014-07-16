@@ -53,33 +53,35 @@ In order to assemble the box, follow these steps:
 3. Place the Arduino Pro Mini above the Bluetooth-Module such that it's front is facing down.
    ![step3](https://github.com/openxc/smart-wiper/raw/master/Docs/step3.JPG)
 
-4. Next place the Triple-Axis Accelerometer over the Arduino Pro Mini such that the end with holes sits right above the two elevated holes. Once the Accelerometer is placed, it can be held by screws, screwing it to the base. Once the Triple-Axis Accelerometer is firmly secured grab the insert plate and place it over the Arduino Pro Mini and cover it. ![step4](https://github.com/openxc/smart-wiper/raw/master/Docs/step4.JPG)
+4. Next place the Triple-Axis Accelerometer over the Arduino Pro Mini such that the end with holes sits right above the two elevated holes. Once the Accelerometer is placed, it can be held by screws, screwing it to the base. 
 
-5. Put the USB-Charger onto the insert plate and fix it, the female Micro-USB end of the charger should fit through the hole providing an easy way to charge the battery without taking the box apart. ![usb](https://github.com/openxc/smart-wiper/raw/master/Docs/usb.jpg)
+5. Once the Triple-Axis Accelerometer is firmly secured grab the insert plate and place it over the Arduino Pro Mini and cover it.
+
+6. Put the USB-Charger onto the insert plate and fix it, the female Micro-USB end of the charger should fit through the hole providing an easy way to charge the battery without taking the box apart.
   
-6. Finally, put the Li-ion battery on the internal side of lid and fix the lid. Note: For a waterproof seal use the silicone adhesive around the lid. ![enclosure](https://github.com/openxc/smart-wiper/raw/master/Docs/enclosure.JPG)
+7. Finally, put the Li-ion battery on the internal side of lid and fix the lid. Note: For a waterproof seal use the silicone adhesive around the lid. ![enclosure](https://github.com/openxc/smart-wiper/raw/master/Docs/enclosure.JPG)
   
 ## **Arduino**
 
 Once all the electronics are soldered and placed, we will upload the firmware on to the Arduino. To upload the firmware you need a FTDI cable, that has a standard male USB on its other end. More information can be found on the Arduino's website on how to upload a program on the [Arduino Pro Mini](http://arduino.cc/en/Guide/ArduinoProMini).
 
-The Arduino firmware calculates and sends the information about the current state of the wiper to an Android device over Bluetooth. The next section provides a starter Android project for coomunication with the box.  The Arduino receives the raw acceleration data from the triple axis accelerometer and calculates the variances along the three axes and determines whether the wiper is turned ON/OFF. More details on the algorithm and the scope is discussed in details [here](https://github.com/openxc/smart-wiper/tree/master/Arduino)
+The Arduino firmware calculates and sends the information about the current state of the wiper to an Android device over Bluetooth. The Arduino receives the raw acceleration data from the Triple-Axis Accelerometer and calculates the variances along the three axes and determines whether the wiper is turned ON/OFF. More details on the algorithm and the scope is discussed in details [here](https://github.com/openxc/smart-wiper/tree/master/Arduino)
 
 
 ## **Android**
 
-The primary purpose of the android application is to establish a bluetooth connection with the bluetooth-module and gather data from the box sent over bluetooth.  In order to use the application, first go into the bluetooth setting of your android device, and pair to the Arduino in the Smart Wiper Box. 
+The primary purpose of the android application is to establish a Bluetooth connection with the Bluetooth-module attached to the Arduino Pro Mini and gather data and display it.  In order to use the application, first go into the Bluetooth Setting of your android device, and pair it to the Arduino in the Smart-Wiper Box. 
 
  ![smartwiperbox](https://github.com/openxc/smart-wiper/raw/master/Docs/android.png)
 
 ## **Installation Instruction**
 
-For installation of the Smart-Wiper Box onto the wiper of your car, you firstly make a piece of sticky back band through the two slots on the lid of box, and then fix the band onto the arm of wiper, which is roughly six inches from the bottom of the wiper. The bottom of box should face down to the wiper arm and the lid should face up. Make sure the box is attached onto the wiper arm tightly enough. And now, you can drive your car with the Smart Wiper Box! 
+For installation of the Smart-Wiper Box onto the wiper of your car, you can pass the velcro-straps through the slots on the lid of box, and then fix the straps onto the wiper arm enclosing the wiper blade. It is important to orient the box such that the bottom of box goes face down, in contact with the wiper arm and the lid should face up. Ensure that the velcro strap has firmly secured the wiper box, and is not moving around. In our testing the box was attached roughly six inches from the bottom of the wiper, where it is hinged to the car. This location could change based on the shape and accesibility of the wiper, it was desirable to not place the wiper higher than six inches to avoid obstruction of sight while driving.
 
 
 ## **Testing Condition**
 
-The Smart Wiper Box was tested on the wiper of Ford Focus Titanium 2012 around Palo Alto, CA, at the speed range of 0-50 mph, under different road conditions: urban roads, campus roads and parking areas, and under different driving conditions: smooth style, rapid style, and extremely braking and turning. 
+The Smart-Wiper Box was tested on the wiper of Ford Focus Titanium 2012 around Palo Alto, CA, at the speed range of 0-50 mph, under mixed road conditions containing highways, city roads and parking areas. It was also subjected to a veriety of different driving conditions, which varied from slow to rapid acceleration, braking and turning. In our tests we found that the Smart-Wiper Box was able to accurately estimate the wiper status. 
 
 ![test1](https://github.com/openxc/smart-wiper/raw/master/Docs/test1.JPG)
 
