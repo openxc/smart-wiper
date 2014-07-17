@@ -1,16 +1,14 @@
-** Android project for the Smart Wiper**
+**Android project for the Smart Wiper**
 ======================================
 
-The primary purpose of the android application is to works by initially establishing a bluetooth connection with a previously paired device, then listening for data being sent from that device. The application can also send messages to the device over bluetooth. As soon as a bluetooth connection is opened with the device, all of the data received by the android device from the Ardruino. 
+The primary purpose of the Android application is to establish a Bluetooth connection with a previously paired Bluetooth-module, then listening for data being sent from the Smar-Wiper Box. As soon as the Bluetooth connection is established with the Smart-Wiper Box, it sends calculated wiper position data to the Android device. 
 
-In order to use the application, first go into the bluetooth setting of your android device, and pair to the Arduino in the Smart Wiper Box. 
+Note: In order to use the application,  you first need to pair the Smart-Wiper Box to the Android device. This can be done through the main Bluetooth Setting on the Android device.
 
-Next navigate to where the application is located in the Android's app drawer and launch the application. Once the application is launched, press the *Connect Bluetooth* button and wait until the dialog says *Bluetooth Opened*. In order to check that a successful bluetooth connection was made, look for a green light on the box. Once this occurs, look at the same dialog, as this is where the data will be displayed. 
+Once the application is launched, toggle the *Bluetooth* button and wait until the Bluetooth status says *Bluetooth Opened*. In order to check that a successful bluetooth connection was made, look for a green light on the Smart-Wiper Box. Once all connections are established Wiper Status data shows up in large text on the Android application. 
 
-If the dialog displays "Bluetooth Opened", then a successful connection was made. If the dialog displays "Bluetooth Device Found", the android device has been paired to the device but a connection was not made.
+Note: If the Bluetooth status says *Bluetooth Device Found*, the android device has been paired to the device but a connection was not made.
 
-To send data, type the message into the text box and press *Send Data*. 
+In order to close the Bluetooth connection, press the *Disconnect Bluetooth* button. This stops all Bluetooth communication with the box. 
 
-In order to close the bluetooth connection, press the *Disconnect Bluetooth* button. This stops all bluetooth communication with the box. 
-
-In order to view the logs that were saved, navigate to your device's Downloads folder through either a file management application (i.e. OI File Manager) or the Downloads application. The data will be stored in a file called *wiper_data.txt*
+In order to view the logs that were saved, navigate to your device's *Downloads* folder. The data will be stored in a file called *wiper_data.txt*
