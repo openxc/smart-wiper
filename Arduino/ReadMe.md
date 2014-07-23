@@ -25,7 +25,7 @@ Mathematically the variance can be calculated in the following steps:
 
 1. Average value of &theta; and a<sub>Z</sub>
 
-&#772&theta;, a<sub>Z</sub>&#772;
+&theta;&#772;, <font size="18">a&#772;<sub>Z</sub></font>
 
 2. Find the variance of &theta;
 
