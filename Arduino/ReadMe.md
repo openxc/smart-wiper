@@ -9,9 +9,11 @@ The accelerometer in the Smart-Wiper Box measures the instantaneous acceleration
 
 ![car_orientation](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/car_orientation.JPG)
 
+
+
 Now we define &theta; below:
 
-&theta = tan<sup>-1</sup>(a<sub>Y</sub> / a<sub>Z</sub>)
+&theta; = tan<sup>-1</sup>(a<sub>Y</sub> / a<sub>Z</sub>)
 
 ![theta](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/theta.png)
 
