@@ -37,7 +37,6 @@ Mathematically the variance can be calculated in the following steps:
 In order to get the average values, the microcontroller sums up &theta in the first 50 loops when receiving data; and a<sub>Z</sub> and get the average values using the equations below:
 
 ![equ4](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/equ4.png)
-
 ![equ5](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/equ5.png)
 
 The algorithm is explained as the followings: 
