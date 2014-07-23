@@ -16,6 +16,7 @@ import com.openxc.remote.VehicleServiceException;
 import com.openxc.units.Boolean;
 
 import android.support.v4.app.Fragment;
+import android.text.format.Time;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -33,6 +34,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.os.Build;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -41,11 +44,16 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 
 public class MainActivity extends Activity {
 	static final String TAG = "Main Activity";
 	TextView status;
 	TextView btStatus;
+	TextView heavyRain;
+	TextView heavyHour;
+	TextView lightRain;
+	TextView lightHour;
 	Switch bt;
     BluetoothAdapter mBluetoothAdapter;
     BluetoothSocket socket;
@@ -61,7 +69,20 @@ public class MainActivity extends Activity {
 	TextView wiperStatus;
 	String filename = "wiper_data";
     FileManager fileManager = new FileManager("wiper_data");
+    FileManager user_record = new FileManager("user_record");
+    FileManager record = new FileManager("daily_record");
     boolean checked = false;
+    Button clearButton;
+    Button recordButton;
+    int h_hrs = 0;
+    int h_min = 0;
+    int h_sec = 0;
+    int l_hrs = 0;
+    int l_min = 0;
+    int l_sec = 0;
+    public static final String pref = "record";
+    Time rightnow;
+    int time_record = 0;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,8 +93,27 @@ public class MainActivity extends Activity {
         wiperStatus = (TextView) findViewById(R.id.wiper);
     	btStatus = (TextView) findViewById(R.id.btStatus);
     	bt = (Switch)  findViewById(R.id.bluetooth); 
-
-    	
+    	clearButton = (Button) findViewById(R.id.clearButton);
+    	recordButton = (Button) findViewById(R.id.recordButton);
+    	heavyRain = (TextView) findViewById(R.id.heavyRain);
+    	heavyHour = (TextView) findViewById(R.id.heavyHour);
+    	lightRain = (TextView) findViewById(R.id.lightRain);
+    	lightHour = (TextView) findViewById(R.id.lightHour);    	
+    	SharedPreferences settings = getSharedPreferences(pref, 0);
+    	h_hrs = settings.getInt("h_hrs", 0);
+    	h_min = settings.getInt("h_min", 0);
+    	h_sec = settings.getInt("h_sec", 0);
+    	l_hrs = settings.getInt("l_hrs", 0);
+    	l_min = settings.getInt("l_min", 0);
+    	l_sec = settings.getInt("l_sec", 0); 
+    	time_record = settings.getInt("time_record", 0);
+    	String heavy_display = String.valueOf(h_hrs) + "h " + String.valueOf(h_min) + "m " + String.valueOf(h_sec) + "s";
+    	String light_display = String.valueOf(l_hrs) + "h " + String.valueOf(l_min) + "m " + String.valueOf(l_sec) + "s";
+		heavyHour.setText(heavy_display);
+		lightHour.setText(light_display);
+		
+		timeAdjustment();
+		   	
     	bt.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
     	    	if(isChecked) {
@@ -85,16 +125,49 @@ public class MainActivity extends Activity {
     	                 } catch (Exception ex) { }
     	             } else {
     	            	 try {
-    	            		 disconnectBluetooth(); //disconnect from bluetooth
-                	
+    	            		 disconnectBluetooth(); //disconnect from bluetooth               	
     	            	 	}
     	            	 catch (IOException ex) { }
     	            }
     	    	}
     	});
         
+    	recordButton.setOnClickListener(new View.OnClickListener() {
+    		public void onClick(View v) {    			
+    			rightnow = new Time(Time.getCurrentTimezone());
+    			rightnow.setToNow();
+    			String dailyRecord =  rightnow.toString() + "   Heavy rain "+ String.valueOf(h_hrs) + "h " + String.valueOf(h_min) 
+            			+ "m " + String.valueOf(h_sec) + "s, " + "Light rain " + String.valueOf(l_hrs) + "h " 
+    					+ String.valueOf(l_min) + "m " + String.valueOf(l_sec) + "s";
+    			user_record.writeToFile(dailyRecord +"\n");
+    		}
+    	});
     	
-        	
+    	clearButton.setOnClickListener(new View.OnClickListener() {
+    		public void onClick(View v) {
+    			h_hrs = 0;
+    			h_min = 0;
+    			h_sec = 0;
+    			l_hrs = 0;
+    			l_min = 0;
+    			l_sec = 0;
+    			SharedPreferences settings = getSharedPreferences(pref, 0);
+    			SharedPreferences.Editor editor = settings.edit();
+    			editor.putInt("h_hrs", h_hrs).commit();
+    			editor.putInt("h_min", h_min).commit();
+    			editor.putInt("h_sec", h_sec).commit();
+    			editor.putInt("l_hrs", l_hrs).commit();
+    			editor.putInt("l_min", l_min).commit();
+    			editor.putInt("l_sec", l_sec).commit();
+    			String heavy_display = String.valueOf(h_hrs) + "h " + String.valueOf(h_min) 
+    					+ "m " + String.valueOf(h_sec) + "s";
+    			String light_display = String.valueOf(l_hrs) + "h " + String.valueOf(l_min) 
+    					+ "m " + String.valueOf(l_sec) + "s";
+    			heavyHour.setText(heavy_display);
+    			lightHour.setText(light_display);
+    		}
+    	});
+
     }
     
     @Override
@@ -112,12 +185,6 @@ public class MainActivity extends Activity {
     @Override
     public void onPause() {
     	super.onPause();
-    	
-    	/*if(mVehicleManager != null) {
-    		Log.i("openxc", "Unbinding from VehicleManager");
-    		unbindService(mConnection);
-    		mVehicleManager = null;
-    	}*/
     	
         if(mVehicleManager != null) {
             Log.i(TAG, "Unbinding from Vehicle Manager");
@@ -143,6 +210,44 @@ public class MainActivity extends Activity {
     	}
     }
     
+    /* Clear the current raining time record every 24 hours
+     * 
+     * at 0:00 the raining time record will be cleared and recorded in logs.
+     * 
+     */
+    void timeAdjustment() {
+    	rightnow = new Time(Time.getCurrentTimezone());
+		rightnow.setToNow();
+		if (rightnow.monthDay != time_record) {
+			String dailyRecord =  String.valueOf(rightnow.year) + "/" + String.valueOf(rightnow.month) + "/"
+					+ String.valueOf(time_record) + "   Heavy rain "+ String.valueOf(h_hrs) + "h " + String.valueOf(h_min) 
+        			+ "m " + String.valueOf(h_sec) + "s, " + "Light rain " + String.valueOf(l_hrs) + "h " 
+					+ String.valueOf(l_min) + "m " + String.valueOf(l_sec) + "s";
+			record.writeToFile(dailyRecord + "\n");
+			h_hrs = 0;
+        	h_min = 0;
+        	h_sec = 0;
+        	l_hrs = 0;
+        	l_min = 0;
+        	l_sec = 0;
+        	time_record = rightnow.monthDay;
+        	SharedPreferences settings = getSharedPreferences(pref, 0);
+     		SharedPreferences.Editor editor = settings.edit();
+     		editor.putInt("h_hrs", h_hrs).commit();
+     		editor.putInt("h_min", h_min).commit();
+     		editor.putInt("h_sec", h_sec).commit();
+     		editor.putInt("l_hrs", l_hrs).commit();
+     		editor.putInt("l_min", l_min).commit();
+     		editor.putInt("l_sec", l_sec).commit();
+     		editor.putInt("time_reocrd", time_record).commit();
+        	String heavy_display = String.valueOf(h_hrs) + "h " + String.valueOf(h_min) 
+        			+ "m " + String.valueOf(h_sec) + "s";
+        	String light_display = String.valueOf(l_hrs) + "h " + String.valueOf(l_min) 
+        			+ "m " + String.valueOf(l_sec) + "s";
+     		heavyHour.setText(heavy_display);
+     		lightHour.setText(light_display);
+		}
+    }
     
     /*Connects to bluetooth device
      * 
@@ -156,7 +261,7 @@ public class MainActivity extends Activity {
        
         //Check to see if device is bluetooth capable
         if(mBluetoothAdapter == null) {
-            btStatus.setText("Bluetooth Status: No bluetooth adapter available");
+            btStatus.setText("No bluetooth adapter available");
         }
         
         //Enable bluetooth if it is not already enabled
@@ -177,13 +282,8 @@ public class MainActivity extends Activity {
                 }
             }
         }
-        btStatus.setText("Bluetooth Status: Device paired, not connected");
-    	/*if(bt.isChecked()) {
-    		if(!socket.isConnected()){
-    			bt.setChecked(checked);
-    		}
-    	};
-*/
+        btStatus.setText("Device paired, not connected");
+    	
     }
     
     
@@ -206,7 +306,7 @@ public class MainActivity extends Activity {
         recieveData();
         
         
-        btStatus.setText("Bluetooth Status: Bluetooth Opened");
+        btStatus.setText("Bluetooth Opened");
     }
     
     /*Handles received data
@@ -238,12 +338,57 @@ public class MainActivity extends Activity {
                                     byte[] encodedBytes = new byte[readBufferPosition]; //save the recieved data in an array
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length); 
                                     final String data = new String(encodedBytes, "US-ASCII");
-                                    fileManager.writeToFile(data+"\n");
+                                    Time now = new Time(Time.getCurrentTimezone());
+                            		now.setToNow();
+                                    fileManager.writeToFile(now.toString() + "   " + data +"\n");
                                     readBufferPosition = 0;
                                     
                                     handler.post(new Runnable() {
-                                        public void run() {
-                                            status.setText("Wiper Status: " +data); //display data
+                                        public void run() {                  
+                                        	status.setText(data);
+                                        	CharSequence cs = status.getText();
+                                        	// the signal is "Heavy Rain"
+                                        	if (cs.charAt(0) == 'H') {
+                                        		h_sec += 5;
+                                        		if (h_sec == 60) {
+                                        			h_min++;
+                                        			h_sec = 0;
+                                        			if (h_min == 60) {
+                                        				h_hrs++;
+                                        				h_min = 0;
+                                        			}
+                                        		}
+                                        		String heavy_display = String.valueOf(h_hrs) + "h " + 
+                                        						String.valueOf(h_min) + "m " + 
+                                        						String.valueOf(h_sec) + "s";
+                                        		heavyHour.setText(heavy_display);
+                                        		SharedPreferences settings = getSharedPreferences(pref, 0);
+                                        		SharedPreferences.Editor editor = settings.edit();
+                                        		editor.putInt("h_hrs", h_hrs).commit();
+                                        		editor.putInt("h_min", h_min).commit();
+                                        		editor.putInt("h_sec", h_sec).commit();
+                                        	} 
+                                        	// the signal is "Light Rain"
+                                        	else if (cs.charAt(0) == 'L') {
+                                        		l_sec += 5;
+                                        		if (l_sec == 60) {
+                                        			l_min++;
+                                        			l_sec = 0;
+                                        			if (l_min == 60) {
+                                        				l_hrs++;
+                                        				l_min = 0;
+                                        			}
+                                        		}
+                                        		String light_display = String.valueOf(l_hrs) + "h " + 
+                                        						String.valueOf(l_min) + "m " + 
+                                        						String.valueOf(l_sec) + "s";
+                                        		lightHour.setText(light_display);
+                                        		SharedPreferences settings = getSharedPreferences(pref, 0);
+                                        		SharedPreferences.Editor editor = settings.edit();
+                                        		editor.putInt("l_hrs", l_hrs).commit();
+                                        		editor.putInt("l_min", l_min).commit();
+                                        		editor.putInt("l_sec", l_sec).commit();
+                                        	}
                                             Log.i(TAG, data);
                                         }
                                     });
@@ -276,7 +421,7 @@ public class MainActivity extends Activity {
 	        inputStream.close();
 	        socket.close();
        }
-        btStatus.setText("Bluetooth Status: Bluetooth Closed");
+        btStatus.setText("Bluetooth Closed");
     }
     
     WindshieldWiperStatus.Listener wiperListener = new WindshieldWiperStatus.Listener() {
@@ -297,7 +442,7 @@ public class MainActivity extends Activity {
                     // UI thread - we set the text of the WindshieldWiperStatus view to
                     // the latest value
                 	if(mVehicleManager != null) {
-                		wiperStatus.setText("Wiper Status:"  + speed);
+                		wiperStatus.setText(""+speed);
                 	}
                 }
             });

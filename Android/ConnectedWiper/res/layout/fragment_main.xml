@@ -2,66 +2,130 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
+    android:gravity="center_vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background = "#000000"
-    
     tools:context="com.ford.svl.connectedwiper.MainActivity$PlaceholderFragment" >
 
-      <TextView
-          android:id="@+id/status"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:layout_alignLeft="@+id/disconnect"
-          android:layout_below="@+id/disconnect"
-          android:layout_centerVertical="true"
-          android:layout_marginTop="102dp"
-          android:text="Wiper Status: "
-          android:textColor="#F5F5F5"
-          android:textSize="50sp" />
+    <Switch
+        android:id="@+id/bluetooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/disconnect"
+        android:layout_below="@+id/disconnect"
+        android:layout_marginTop="20dp"
+        android:text="Bluetooth"
+        android:textColor="#F5F5F5"
+        android:textSize="18sp" />
 
-      <Switch
-          android:id="@+id/bluetooth"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignRight="@+id/disconnect"
-          android:layout_below="@+id/disconnect"
-          android:layout_marginTop="20dp"
-          android:text="Bluetooth"
-          android:textColor="#F5F5F5"
-          android:textSize="18sp" />
+    <TextView
+        android:id="@+id/dataLogging"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/status"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:text="The raining status data log is being stored in the wiper_data.txt file in Downloads \n 
+the daily raining time log is being stored in the daily_record.txt file in Downloads"
+        android:textColor="#F5F5F5" />
 
-      <TextView
-          android:id="@+id/dataLogging"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignLeft="@+id/status"
-          android:layout_alignParentBottom="true"
-          android:layout_marginBottom="80dp"
-          android:text="The wiper status data log is being stored in the wiper_data.txt file in Downloads "
-          android:textColor="#F5F5F5" />
+    <TextView
+        android:id="@+id/btStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/bluetooth"
+        android:layout_marginLeft="34dp"
+        android:layout_toRightOf="@+id/bluetooth"
+        android:textColor="#F5F5F5"
+        android:textSize="20sp" />
 
-      <TextView
-          android:id="@+id/btStatus"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:layout_alignLeft="@+id/bluetooth"
-          android:layout_below="@+id/bluetooth"
-          android:text="Bluetooth Status: "
-          android:textColor="#F5F5F5"
-          android:textSize="20sp" />
+    <TextView
+        android:id="@+id/heavyRain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/bluetooth"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="61dp"
+        android:text="Heavy Rain"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#F5F5F5"
+        android:textSize="25sp" />
 
-      <TextView
-          android:id="@+id/wiper"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:layout_alignLeft="@+id/btStatus"
-          android:layout_below="@+id/btStatus"
-          android:layout_marginTop="47dp"
-          android:text="OpenXC Wiper Status:"
-          android:textColor="#F5F5F5"
-          android:textSize="20sp" />
-    
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/heavyRain"
+        android:layout_alignRight="@+id/wiper"
+        android:gravity="center_horizontal"
+        android:textColor="#F5F5F5"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/wiper"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/status"
+        android:layout_marginBottom="108dp"
+        android:textColor="#F5F5F5"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/lightRain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/heavyRain"
+        android:layout_below="@+id/heavyRain"
+        android:layout_marginTop="42dp"
+        android:text="Light Rain"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#F5F5F5"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/heavyHour"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lightRain"
+        android:layout_alignRight="@+id/dataLogging"
+        android:layout_marginRight="13dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#F5F5F5"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/lightHour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/lightRain"
+        android:layout_alignLeft="@+id/heavyHour"
+        android:layout_alignRight="@+id/heavyHour"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#F5F5F5"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/recordButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/heavyRain"
+        android:layout_below="@+id/lightRain"
+        android:layout_marginTop="53dp"
+        android:text="RECORD"
+        android:textColor="#F5F5F5" />
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/recordButton"
+        android:layout_alignBottom="@+id/recordButton"
+        android:layout_alignRight="@+id/lightHour"
+        android:layout_marginRight="48dp"
+        android:text="CLEAR"
+        android:textColor="#F5F5F5" />
+
 </RelativeLayout>
