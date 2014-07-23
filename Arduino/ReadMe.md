@@ -10,7 +10,6 @@ The accelerometer in the Smart-Wiper Box measures the instantaneous acceleration
 ![car_orientation](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/car_orientation.JPG)
 
 
-
 Now we define &theta; below:
 
 &theta; = tan<sup>-1</sup>(a<sub>Y</sub> / a<sub>Z</sub>)
@@ -25,21 +24,21 @@ Mathematically the variance can be calculated in the following steps:
 
 1. Average value of &theta; and a<sub>Z</sub>
 
-&theta;&#772;, <font size="18">a&#772;<sub>Z</sub></font>
+![equ1](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/equ1.png)
 
 2. Find the variance of &theta;
 
-Var(&theta;) = (&theta; - &theta;&#772;)&sup2;
+![equ2](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/equ2.png)
 
 3. Find the variance of a<sub>Z</sub>
 
-Var(a<sub>Z</sub>) = (a<sub>Z</sub> - a<sub>Z</sub>&#772;)&sup2; 
+![equ3](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/equ3.png) 
 
 In order to get the average values, the microcontroller sums up &theta in the first 50 loops when receiving data; and a<sub>Z</sub> and get the average values using the equations below:
 
-&theta;&#772; = 1&frasl;50&sum;&theta;
+![equ4](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/equ4.png)
 
-a<sub>Z</sub>&#772; = 1&frasl;50&sum;a<sub>Z</sub>
+![equ5](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/equ5.png)
 
 The algorithm is explained as the followings: 
 
