@@ -22,7 +22,7 @@ In order to distinguish the status of the wiper from non-wiping state, it is nec
 
 Mathematically the variance can be calculated in the following steps: 
 
-1. Average value of &theta; and a<sub>Z</sub> (In order to get the average values, the microcontroller sums up &theta in the first 50 data points (1 sec) when receiving data and calculates average values)
+1. Find average values of &theta; and a<sub>Z</sub> (In order to get the average values, the microcontroller sums up &theta in the first 50 data points (1 sec) when receiving data and calculates the average values)
 
   ![equ4](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/equ4.png)       
   ![equ5](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/equ5.png)
