@@ -5,30 +5,52 @@ The Arduino firmware calculates and sends the current wiper status to the Androi
 
 **Algorithm Overview**
 
-The accelerometer in the Smart-Wiper Box measures the instantaneous acceleration in three axes X, Y and Z ( refereed as Ax, Ay, Az). In order to distinguish the status of the wiper from non-wiping state, it is necessary to obtain the variance of theta, referred as Var(theta), and the variance of Az, referred as Var(Az). From our experiments (see the *Plot* below), clear pattern can be observed from the plot for Var(theta) and Var(Az) between wiping and non-wiping states. Therefore, an algorithm was developed to distinguish the status of the wiper and the raining condition can then be understood.
+The accelerometer in the Smart-Wiper Box measures the instantaneous acceleration in three axes X, Y and Z ( refereed as a<sub>X</sub>, a<sub>Y</sub> and a<sub>Z</sub>). The directions of X, Y and Z are defined in the following picture:
 
-![Wiping Waves](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/wipingwaves.jpg)
+![car_orientation](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/car_orientation.jpg)
+
+Now we define &theta; below:
+
+&theta = tan<sup>-1</sup>(a<sub>Y</sub> / a<sub>Z</sub>)
+
+![theta](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/theta.png)
+
+In order to distinguish the status of the wiper from non-wiping state, it is necessary to obtain the variance of &theta;, referred as Var(&theta;), and the variance of a<sub>Z</sub>, referred as Var(a<sub>Z</sub>). From our experiments (see the *Plot* below), clear pattern can be observed from the plot for Var(&theta;) and Var(a<sub>Z</sub>) between wiping and non-wiping states. Therefore, an algorithm was developed to distinguish the status of the wiper and the raining condition can then be understood.
+
+![Wiping Waves](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/wipingwaves.png)
 
 Mathematically the variance can be calculated in the following steps: 
 
-1. Average value of theta and Az
+1. Average value of &theta; and a<sub>Z</sub>
 
-theta bar, Az bar
+&theta;&#772;, a<sub>Z</sub>&#772;
 
-2. Find the variance of theta
+2. Find the variance of &theta;
 
-VarXY = square(atan2(AxisX, AxisY) - refAngle)
+Var(&theta;) = (&theta; - &theta;&#772)&sup2;
 
-3. Find the variance of Az
+3. Find the variance of a<sub>Z</sub>
 
-VarZ = square(AxisZ - refZ) 
+Var(a<sub>Z</sub>) = (a<sub>Z</sub> - a<sub>Z</sub>&#772;)&sup2; 
+
+In order to get the average values, the microcontroller sums up &theta in the first 50 loops when receiving data; and a<sub>Z</sub> and get the average values using the equations below:
+
+&theta;&#772; = 1&fracsl;50&sum;&theta;
+
+a<sub>Z</sub>&#772; = 1&fracsl;50&sum;a<sub>Z</sub>
 
 The algorithm is explained as the followings: 
 
-1. If any of Var(theta) and Var(Az) are lower than the respective threshold value(Th) in the period of 5 seconds, the microcontroller will send *No Rain* signal to Android application over Bluetooth.
+1. If any of Var(&theta;) and Var(a<sub>Z</sub>) are *lower* than the respective threshold value(Th) in the period of 5 seconds, the microcontroller will send *No Rain* signal to Android application over Bluetooth.
 
-2. If both Var(theta) and Var(Az) are higher than the respective threshold value(Th) for up to 8 times the period of 5 seconds, the microcontroller will send *Light Rain* signal to Android application. 
+![no rain](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/no_rain.png)
+
+2. If both Var(&theta;) and Var(a<sub>Z</sub>) are *higher* than the respective threshold value(Th) for *1-8 points* (1-2 peaks) the period of 5 seconds, the microcontroller will send *Light Rain* signal to Android application. 
+
+![light rain](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/light_rain.png)
  
-3. if both Var(theta) and Var(Az) are higher than the respective threshold value(Th) for more than 8 times in the period of 5 seconds, the microcontroller will send *Heavy Rain* signal to Android application. 
+3. if both Var(&theta;) and Var(a<sub>Z</sub>) are *higher* than the respective threshold value(Th) for *more than 8 points* (2 peaks or more) in the period of 5 seconds, the microcontroller will send *Heavy Rain* signal to Android application. 
+
+![heavy rain](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/heavy_rain.png)
 
 
