@@ -16,7 +16,7 @@ Now we define &theta; below:
 
 ![theta](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/theta.png)
 
-In order to distinguish the status of the wiper from non-wiping state, it is necessary to obtain the variance of &theta;, referred as Var(&theta;), and the variance of a<sub>Z</sub>, referred as Var(a<sub>Z</sub>). From our experiments (see the *Plot* below), clear pattern can be observed from the plot for Var(&theta;) and Var(a<sub>Z</sub>) between wiping and non-wiping states. Therefore, an algorithm was developed to distinguish the status of the wiper and the raining condition can then be understood.
+In order to distinguish the ON status of the wiper from OFF status, it is necessary to obtain the variance of &theta;, referred as Var(&theta;), and the variance of a<sub>Z</sub>, referred as Var(a<sub>Z</sub>). From our experiments (see the *Plot* below), clear pattern can be observed from the plot for Var(&theta;) and Var(a<sub>Z</sub>) between ON and OFF status. Therefore, an algorithm was developed to distinguish the status of the wiper and the raining condition can then be understood.
 
 ![Wiping Waves](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/wipingwaves.png)
 
