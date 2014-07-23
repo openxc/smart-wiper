@@ -7,7 +7,7 @@ The Arduino firmware calculates and sends the current wiper status to the Androi
 
 The accelerometer in the Smart-Wiper Box measures the instantaneous acceleration in three axes X, Y and Z ( refereed as a<sub>X</sub>, a<sub>Y</sub> and a<sub>Z</sub>). The directions of X, Y and Z are defined in the following picture:
 
-![car_orientation](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/car_orientation.jpg)
+![car_orientation](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/car_orientation.JPG)
 
 Now we define &theta; below:
 
