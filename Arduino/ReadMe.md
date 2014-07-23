@@ -54,7 +54,7 @@ The algorithm is explained as the followings:
   ![light rain](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/light_rain.png)
  
  
-3. if both Var(&theta;) and Var(a<sub>Z</sub>) are *higher* than the respective threshold value(Th) for *more than 8 points* (2 peaks or more) in the period of 5 seconds, the microcontroller will send **Heavy Rain** signal to Android application. 
+3. if both Var(&theta;) and Var(a<sub>Z</sub>) are *higher* than the respective threshold value(Th) for *more than 8 points* (3 peaks or more) in the period of 5 seconds, the microcontroller will send **Heavy Rain** signal to Android application. 
 
 
   ![heavy rain](https://github.com/openxc/smart-wiper/raw/master/Arduino/Docs/heavy_rain.png)
