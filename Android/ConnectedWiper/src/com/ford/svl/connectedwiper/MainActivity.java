@@ -54,6 +54,7 @@ public class MainActivity extends Activity {
 	TextView heavyHour;
 	TextView lightRain;
 	TextView lightHour;
+	TextView dataLogging;
 	Switch bt;
     BluetoothAdapter mBluetoothAdapter;
     BluetoothSocket socket;
@@ -93,6 +94,7 @@ public class MainActivity extends Activity {
         wiperStatus = (TextView) findViewById(R.id.wiper);
     	btStatus = (TextView) findViewById(R.id.btStatus);
     	bt = (Switch)  findViewById(R.id.bluetooth); 
+    	dataLogging = (TextView) findViewById(R.id.dataLogging);
     	clearButton = (Button) findViewById(R.id.clearButton);
     	recordButton = (Button) findViewById(R.id.recordButton);
     	heavyRain = (TextView) findViewById(R.id.heavyRain);
@@ -140,6 +142,7 @@ public class MainActivity extends Activity {
             			+ "m " + String.valueOf(h_sec) + "s, " + "Light rain " + String.valueOf(l_hrs) + "h " 
     					+ String.valueOf(l_min) + "m " + String.valueOf(l_sec) + "s";
     			user_record.writeToFile(dailyRecord +"\n");
+    			dataLogging.setText("The raining status data log is being stored in the user_record.txt file in Downloads");
     		}
     	});
     	
@@ -165,6 +168,7 @@ public class MainActivity extends Activity {
     					+ "m " + String.valueOf(l_sec) + "s";
     			heavyHour.setText(heavy_display);
     			lightHour.setText(light_display);
+    			dataLogging.setText("The raining status time has been cleared.");
     		}
     	});
 
@@ -246,6 +250,7 @@ public class MainActivity extends Activity {
         			+ "m " + String.valueOf(l_sec) + "s";
      		heavyHour.setText(heavy_display);
      		lightHour.setText(light_display);
+     		dataLogging.setText("The raining status data log is being stored in the daily_record.txt file in Downloads");
 		}
     }
     
@@ -341,6 +346,7 @@ public class MainActivity extends Activity {
                                     Time now = new Time(Time.getCurrentTimezone());
                             		now.setToNow();
                                     fileManager.writeToFile(now.toString() + "   " + data +"\n");
+                                    dataLogging.setText("The raining status data log is being stored in the wiper_data.txt file in Downloads");
                                     readBufferPosition = 0;
                                     
                                     handler.post(new Runnable() {
