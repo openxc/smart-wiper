@@ -74,6 +74,8 @@ The Arduino firmware calculates and sends the information about the current stat
 
 ## **Android**
 
+![icon](https://github.com/openxc/smart-wiper/raw/master/Docs/smartwipericon.png)
+
 The primary purpose of the android application is to establish a Bluetooth connection with the Bluetooth-module attached to the Arduino Pro Mini and gather data and display it.  In order to use the application, first go into the Bluetooth Setting of your android device, and pair it to the Arduino in the Smart-Wiper Box. 
 
  ![smartwiperbox](https://github.com/openxc/smart-wiper/raw/master/Docs/androidv2.png)
