@@ -60,7 +60,7 @@ In order to assemble the box, follow these steps:
   ![step5](https://github.com/openxc/smart-wiper/raw/master/Docs/step5v2.JPG)
 
 6. Put the USB-Charger and the slide switch onto the insert plate and fix them, the female Micro-USB end of the charger should fit through the hole providing an easy way to charge the battery without taking the box apart.    ![step6](https://github.com/openxc/smart-wiper/raw/master/Docs/step6v2.JPG)
-  ![usb](https://github.com/openxc/smart-wiper/raw/master/Docs/usbv2.jpg)
+  ![usb](https://github.com/openxc/smart-wiper/raw/master/Docs/usbv2.JPG)
 
   
 7. Finally, put the Li-ion battery above the insert plate and fix the lid. Note: For a waterproof seal use the silicone adhesive around the lid. ![enclosure](https://github.com/openxc/smart-wiper/raw/master/Docs/enclosurev2.JPG)
