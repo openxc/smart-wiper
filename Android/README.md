@@ -24,3 +24,5 @@ Note: If the Bluetooth status says *Bluetooth Device Found*, the android device 
 In order to close the Bluetooth connection, turn off the *Bluetooth* switch. This stops all Bluetooth communication with the box. 
 
 In order to view the logs that were saved, navigate to your device's *Downloads* folder. The data will be stored in a file called *wiper_data.txt*
+
+![android](https://github.com/openxc/smart-wiper/raw/master/Android/Docs/android.png)
