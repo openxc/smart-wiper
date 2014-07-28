@@ -74,16 +74,13 @@ The Arduino firmware calculates and sends the information about the current stat
 
 ## **Android**
 
-![icon](https://github.com/openxc/smart-wiper/raw/master/Docs/smartwipericon.png)
-
-The primary purpose of the android application is to establish a Bluetooth connection with the Bluetooth-module attached to the Arduino Pro Mini and gather data and display it.  In order to use the application, first go into the Bluetooth Setting of your android device, and pair it to the Arduino in the Smart-Wiper Box. 
+The primary purpose of the Android application is to get the sensor data from the Smart-Wiper Box via Bluetooth. In order to use the application, first go into the Bluetooth Setting of your android device, and pair it to the Arduino in the Smart-Wiper Box. 
 
  ![smartwiperbox](https://github.com/openxc/smart-wiper/raw/master/Docs/androidv2.png)
 
 ## **Installation Instruction**
 
 For installation of the Smart-Wiper Box onto the wiper of your car, you can pass the velcro-straps through the slots on the side of box, and then fix the straps onto the wiper arm enclosing the wiper blade. It is important to orient the box such that the bottom of box goes face down, in contact with the wiper arm and the lid should face up. Ensure that the velcro strap has firmly secured the wiper box, and is not moving around. In our testing the box was attached roughly six inches from the bottom of the wiper, where it is hinged to the car. This location could change based on the shape and accesibility of the wiper, it was desirable to not place the wiper higher than six inches to avoid obstruction of sight while driving.
-
 
 ## **Testing Condition**
 
