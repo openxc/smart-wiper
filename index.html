@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Smart Wiper by openxc</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Smart Wiper</h1>
+          <h2></h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/openxc/smart-wiper/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/openxc/smart-wiper/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/openxc/smart-wiper" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <p>The Smart Wiper project provides a simple way for collecting data on rain frequency and/or intensity. A 3D printed enclosure or 'box' houses an inertial measurement unit that can be attached to the windshield wiper. The device monitors the change in acceleration of the windshield wiper and use that as a surrogate for rain detection and intensity. 
+The project contains:</p>
+
+<ul>
+<li>
+<a href="https://github.com/openxc/smart-wiper/tree/master/Circuit_Design">Electronics Layout</a>: The circuit diagram and all necessary electronics for the box</li>
+<li>
+<a href="https://github.com/openxc/smart-wiper/tree/master/Arduino">Arduino Firmware</a>: The arduino firmware that converts acceleration data into a generic wiper movement data</li>
+<li>
+<a href="https://github.com/openxc/smart-wiper/tree/master/Android">Android Project</a>: That communicates with the electronics box over bluetooth and provides a simple UI to display that</li>
+<li>
+<a href="https://github.com/openxc/smart-wiper/tree/master/CAD">3D printed enclosure</a>: CAD files for the box, for 3D printing the box</li>
+</ul><p><img src="https://github.com/openxc/smart-wiper/raw/master/Docs/smartwiperboxv2.JPG" alt="smartwiperbox"></p>
+
+<h2>
+<a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a><strong>Dependencies</strong>
+</h2>
+
+<p><strong>Hardware</strong></p>
+
+<ul>
+<li>Bluetooth-compatible Android device</li>
+<li>Smart Wiper Box (<a href="https://github.com/openxc/smart-wiper/tree/master/CAD">see 3D CAD files here</a>)</li>
+<li>Electrical components (<a href="https://github.com/openxc/smart-wiper/tree/master/BOMs">see BOM here</a>)</li>
+</ul><p><img src="https://github.com/openxc/smart-wiper/raw/master/Docs/componentsv2.JPG" alt="hardware"></p>
+
+<p><strong>Software</strong></p>
+
+<ul>
+<li>Android SDK</li>
+<li>Android ADT/Eclipse</li>
+<li>Arduino IDE</li>
+</ul><h2>
+<a name="smart-wiper-hardware-assembly" class="anchor" href="#smart-wiper-hardware-assembly"><span class="octicon octicon-link"></span></a><strong>Smart Wiper Hardware Assembly</strong>
+</h2>
+
+<p>The Smart wiper box includes:</p>
+
+<ul>
+<li>Arduino Pro Mini board </li>
+<li>Bluetooth-Module </li>
+<li>Triple-Axis Accelerometer</li>
+<li>Li-ion battery </li>
+<li>USB-Charger </li>
+<li>3D printed enclosure</li>
+</ul><p>The image below shows the overall circuit layout</p>
+
+<p><img src="https://github.com/openxc/smart-wiper/raw/master/Circuit_Design/SmartWiper_bb.png" alt="Circuit"></p>
+
+<p>In order to assemble the box, follow these steps: </p>
+
+<ol>
+<li><p>Take a look at the electrical circuit design shown above to solder and connect all the electronic components. The length of the wires can be determined by how they stack up inside the enclosure. It is good practice to place all the parts and see how they are stacked and placed over each other as detailed between Step 2 and Step 6. </p></li>
+<li><p>Place the Bluetooth-module at the bottom of the <a href="https://github.com/openxc/smart-wiper/tree/master/CAD">3D printed enclosure</a>, the orientation of the Bluetooth-Module should be such that the pins on the module are next to the elevated holes sticking out from the bottom of the box for the Triple-Axis Accelerometer.
+<img src="https://github.com/openxc/smart-wiper/raw/master/Docs/step2v2.JPG" alt="step2"></p></li>
+<li><p>Place the Arduino Pro Mini above the Bluetooth-Module such that it's front is facing up.
+<img src="https://github.com/openxc/smart-wiper/raw/master/Docs/step3v2.JPG" alt="step3"></p></li>
+<li><p>Next place the Triple-Axis Accelerometer over the Arduino Pro Mini such that the end with holes sits right above the two pillars. Once the Accelerometer is placed, it can be held by the pillars.
+<img src="https://github.com/openxc/smart-wiper/raw/master/Docs/step4v2.JPG" alt="step4"></p></li>
+<li><p>Once the Triple-Axis Accelerometer is firmly secured grab the insert plate and place it over the Arduino Pro Mini and cover it.
+<img src="https://github.com/openxc/smart-wiper/raw/master/Docs/step5v2.JPG" alt="step5"></p></li>
+<li><p>Put the USB-Charger and the slide switch onto the insert plate and fix them, the female Micro-USB end of the charger should fit through the hole providing an easy way to charge the battery without taking the box apart.    <img src="https://github.com/openxc/smart-wiper/raw/master/Docs/step6v2.JPG" alt="step6"><img src="https://github.com/openxc/smart-wiper/raw/master/Docs/usbv2.JPG" alt="usb"></p></li>
+<li><p>Finally, put the Li-ion battery above the insert plate and fix the lid. Note: For a waterproof seal use the silicone adhesive around the lid. <img src="https://github.com/openxc/smart-wiper/raw/master/Docs/enclosurev2.JPG" alt="enclosure"></p></li>
+</ol><h2>
+<a name="arduino" class="anchor" href="#arduino"><span class="octicon octicon-link"></span></a><strong>Arduino</strong>
+</h2>
+
+<p>Once all the electronics are soldered and placed, we will upload the firmware on to the Arduino. To upload the firmware you need a FTDI cable, that has a standard male USB on its other end. More information can be found on the Arduino's website on how to upload a program on the <a href="http://arduino.cc/en/Guide/ArduinoProMini">Arduino Pro Mini</a>.</p>
+
+<p>The Arduino firmware calculates and sends the information about the current state of the wiper to an Android device over Bluetooth. The Arduino receives the raw acceleration data from the Triple-Axis Accelerometer and calculates the variances along the three axes and determines whether the wiper is turned ON/OFF. More details on the algorithm and the scope is discussed in details <a href="https://github.com/openxc/smart-wiper/tree/master/Arduino">here</a></p>
+
+<h2>
+<a name="android" class="anchor" href="#android"><span class="octicon octicon-link"></span></a><strong>Android</strong>
+</h2>
+
+<p>The primary purpose of the Android application is to get the sensor data from the Smart-Wiper Box via Bluetooth. In order to use the application, first go into the Bluetooth Setting of your android device, and pair it to the Arduino in the Smart-Wiper Box. </p>
+
+<p><img src="https://github.com/openxc/smart-wiper/raw/master/Docs/androidv2.png" alt="smartwiperbox"></p>
+
+<h2>
+<a name="installation-instruction" class="anchor" href="#installation-instruction"><span class="octicon octicon-link"></span></a><strong>Installation Instruction</strong>
+</h2>
+
+<p>For installation of the Smart-Wiper Box onto the wiper of your car, you can pass the velcro-straps through the slots on the side of box, and then fix the straps onto the wiper arm enclosing the wiper blade. It is important to orient the box such that the bottom of box goes face down, in contact with the wiper arm and the lid should face up. Ensure that the velcro strap has firmly secured the wiper box, and is not moving around. In our testing the box was attached roughly six inches from the bottom of the wiper, where it is hinged to the car. This location could change based on the shape and accesibility of the wiper, it was desirable to not place the wiper higher than six inches to avoid obstruction of sight while driving.</p>
+
+<h2>
+<a name="testing-condition" class="anchor" href="#testing-condition"><span class="octicon octicon-link"></span></a><strong>Testing Condition</strong>
+</h2>
+
+<p>The Smart-Wiper Box was tested on the wiper of Ford Focus Titanium 2012 around Palo Alto, CA, at the speed range of 0-50 mph, under mixed road conditions containing highways, city roads and parking areas. It was also subjected to a veriety of different driving conditions, which varied from slow to rapid acceleration, braking and turning. In our tests we found that the Smart-Wiper Box was able to accurately estimate the wiper status. </p>
+
+<p><img src="https://github.com/openxc/smart-wiper/raw/master/Docs/test3.JPG" alt="test3"></p>
+
+<p><img src="https://github.com/openxc/smart-wiper/raw/master/Docs/test2.JPG" alt="test2"></p>
+        </section>
+
+        <footer>
+          Smart Wiper is maintained by <a href="https://github.com/openxc">openxc</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+                  <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-53631565-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+      </div>
+    </div>
+  </body>
+</html>
