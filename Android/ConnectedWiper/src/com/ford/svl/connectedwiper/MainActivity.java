@@ -436,7 +436,7 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.recordButton){
-			Log.i(TAG, "Record");
+			Log.i(TAG, "Record button clicked");
 			rightnow = new Time(Time.getCurrentTimezone());
 			rightnow.setToNow();
 			String dailyRecord =  rightnow.toString() + "   Heavy rain "+ String.valueOf(h_hrs) + "h " + String.valueOf(h_min) 
