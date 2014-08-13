@@ -1,6 +1,5 @@
 package com.ford.svl.connectedwiper;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8,35 +7,23 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.openxc.VehicleManager;
-import com.openxc.measurements.EngineSpeed;
 import com.openxc.measurements.Measurement;
 import com.openxc.measurements.UnrecognizedMeasurementTypeException;
 import com.openxc.measurements.WindshieldWiperStatus;
 import com.openxc.remote.VehicleServiceException;
-import com.openxc.units.Boolean;
 
-import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
-import android.widget.RatingBar;
-import android.widget.RatingBar.OnRatingBarChangeListener;
-import android.os.Build;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.*;
@@ -46,22 +33,32 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 
-public class MainActivity extends Activity {
-	static final String TAG = "Main Activity";
-	TextView status;
-	TextView btStatus;
-	TextView heavyRain;
-	TextView heavyHour;
-	TextView lightRain;
-	TextView lightHour;
-	TextView dataLogging;
-	Switch bt;
-    BluetoothAdapter mBluetoothAdapter;
-    BluetoothSocket socket;
-    BluetoothDevice device;
-    OutputStream outputStream;
-    InputStream inputStream;
-    Thread workerThread;
+public class MainActivity extends Activity implements OnClickListener, OnCheckedChangeListener {
+	
+	public static final String TAG = MainActivity.class.getSimpleName();
+	
+	private TextView status;
+	private TextView btStatus;
+	@SuppressWarnings("unused")
+	private TextView heavyRain;
+	private TextView heavyHour;
+	@SuppressWarnings("unused")
+	private TextView lightRain;
+	private TextView lightHour;
+	private TextView dataLogging;
+	
+    private Button clearButton;
+    private Button recordButton;
+    
+	private Switch bt;
+	
+	private BluetoothAdapter mBluetoothAdapter;
+	private BluetoothSocket socket;
+	private BluetoothDevice device;
+	private OutputStream outputStream;
+	private InputStream inputStream;
+	private Thread workerThread;
+	
     byte[] readBuffer;
     int readBufferPosition;
     int counter;
@@ -73,8 +70,7 @@ public class MainActivity extends Activity {
     FileManager user_record = new FileManager("user_record");
     FileManager record = new FileManager("daily_record");
     boolean checked = false;
-    Button clearButton;
-    Button recordButton;
+
     int h_hrs = 0;
     int h_min = 0;
     int h_sec = 0;
@@ -88,19 +84,26 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       
         setContentView(R.layout.fragment_main);
-        status = (TextView) findViewById(R.id.status);
-        wiperStatus = (TextView) findViewById(R.id.wiper);
-    	btStatus = (TextView) findViewById(R.id.btStatus);
-    	bt = (Switch)  findViewById(R.id.bluetooth); 
-    	dataLogging = (TextView) findViewById(R.id.dataLogging);
-    	clearButton = (Button) findViewById(R.id.clearButton);
-    	recordButton = (Button) findViewById(R.id.recordButton);
-    	heavyRain = (TextView) findViewById(R.id.heavyRain);
+        
+        status 	  = (TextView) findViewById(R.id.status);
+        heavyRain = (TextView) findViewById(R.id.heavyRain);
     	heavyHour = (TextView) findViewById(R.id.heavyHour);
     	lightRain = (TextView) findViewById(R.id.lightRain);
-    	lightHour = (TextView) findViewById(R.id.lightHour);    	
+    	lightHour = (TextView) findViewById(R.id.lightHour); 
+        wiperStatus = (TextView) findViewById(R.id.wiper);
+        dataLogging = (TextView) findViewById(R.id.dataLogging);
+    	btStatus    = (TextView) findViewById(R.id.btStatus);
+    	
+    	bt = (Switch)  findViewById(R.id.bluetooth); 
+    	bt.setOnCheckedChangeListener(this);
+    	
+    	clearButton = (Button) findViewById(R.id.clearButton);
+    	clearButton.setOnClickListener(this);
+    	
+    	recordButton = (Button) findViewById(R.id.recordButton);
+    	recordButton.setOnClickListener(this);
+    	   	
     	SharedPreferences settings = getSharedPreferences(pref, 0);
     	h_hrs = settings.getInt("h_hrs", 0);
     	h_min = settings.getInt("h_min", 0);
@@ -115,62 +118,7 @@ public class MainActivity extends Activity {
 		lightHour.setText(light_display);
 		
 		timeAdjustment();
-		   	
-    	bt.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-    	    	if(isChecked) {
-    	    			checked = isChecked;
-    	    			 try {
-    	                     connectBluetooth(); //connect to bluetooth device
-    	                     startBluetooth(); //start recieving data from device
-    	                     Log.i(TAG, "BT connection");
-    	                 } catch (Exception ex) { }
-    	             } else {
-    	            	 try {
-    	            		 disconnectBluetooth(); //disconnect from bluetooth               	
-    	            	 	}
-    	            	 catch (IOException ex) { }
-    	            }
-    	    	}
-    	});
-        
-    	recordButton.setOnClickListener(new View.OnClickListener() {
-    		public void onClick(View v) {    			
-    			rightnow = new Time(Time.getCurrentTimezone());
-    			rightnow.setToNow();
-    			String dailyRecord =  rightnow.toString() + "   Heavy rain "+ String.valueOf(h_hrs) + "h " + String.valueOf(h_min) 
-            			+ "m " + String.valueOf(h_sec) + "s, " + "Light rain " + String.valueOf(l_hrs) + "h " 
-    					+ String.valueOf(l_min) + "m " + String.valueOf(l_sec) + "s";
-    			user_record.writeToFile(dailyRecord +"\n");
-    			dataLogging.setText("The raining status data log is being stored in the user_record.txt file in Downloads");
-    		}
-    	});
-    	
-    	clearButton.setOnClickListener(new View.OnClickListener() {
-    		public void onClick(View v) {
-    			h_hrs = 0;
-    			h_min = 0;
-    			h_sec = 0;
-    			l_hrs = 0;
-    			l_min = 0;
-    			l_sec = 0;
-    			SharedPreferences settings = getSharedPreferences(pref, 0);
-    			SharedPreferences.Editor editor = settings.edit();
-    			editor.putInt("h_hrs", h_hrs).commit();
-    			editor.putInt("h_min", h_min).commit();
-    			editor.putInt("h_sec", h_sec).commit();
-    			editor.putInt("l_hrs", l_hrs).commit();
-    			editor.putInt("l_min", l_min).commit();
-    			editor.putInt("l_sec", l_sec).commit();
-    			String heavy_display = String.valueOf(h_hrs) + "h " + String.valueOf(h_min) 
-    					+ "m " + String.valueOf(h_sec) + "s";
-    			String light_display = String.valueOf(l_hrs) + "h " + String.valueOf(l_min) 
-    					+ "m " + String.valueOf(l_sec) + "s";
-    			heavyHour.setText(heavy_display);
-    			lightHour.setText(light_display);
-    			dataLogging.setText("The raining status time has been cleared.");
-    		}
-    	});
+/*	*/
 
     }
     
@@ -346,7 +294,13 @@ public class MainActivity extends Activity {
                                     Time now = new Time(Time.getCurrentTimezone());
                             		now.setToNow();
                                     fileManager.writeToFile(now.toString() + "   " + data +"\n");
-                                    dataLogging.setText("The raining status data log is being stored in the wiper_data.txt file in Downloads");
+                                    MainActivity.this.runOnUiThread(new Runnable(){
+
+										@Override
+										public void run() {
+											dataLogging.setText("The raining status data log is being stored in the wiper_data.txt file in Downloads");
+										}});
+                                    
                                     readBufferPosition = 0;
                                     
                                     handler.post(new Runnable() {
@@ -439,9 +393,7 @@ public class MainActivity extends Activity {
             final WindshieldWiperStatus wiper = (WindshieldWiperStatus) measurement;
             speed = wiper.getValue().booleanValue();
             
-            // In order to modify the UI, we have to make sure the code is
-            // running on the "UI thread" - Google around for this, it's an
-            // important concept in Android.
+            // makes sure the code is run on the Main UI thread
             MainActivity.this.runOnUiThread(new Runnable() {
                 public void run() {
                     // Finally, we've got a new value and we're running on the
@@ -480,4 +432,59 @@ public class MainActivity extends Activity {
             mVehicleManager = null;
         }
     };
+
+	@Override
+	public void onClick(View v) {
+		if(v.getId() == R.id.recordButton){
+			Log.i(TAG, "Record");
+			rightnow = new Time(Time.getCurrentTimezone());
+			rightnow.setToNow();
+			String dailyRecord =  rightnow.toString() + "   Heavy rain "+ String.valueOf(h_hrs) + "h " + String.valueOf(h_min) 
+        			+ "m " + String.valueOf(h_sec) + "s, " + "Light rain " + String.valueOf(l_hrs) + "h " 
+					+ String.valueOf(l_min) + "m " + String.valueOf(l_sec) + "s";
+			user_record.writeToFile(dailyRecord +"\n");
+			dataLogging.setText("The raining status data log is being stored in the user_record.txt file in Downloads");
+		}else if(v.getId()==R.id.clearButton){
+			Log.i(TAG, "Clear");
+			h_hrs = 0;
+			h_min = 0;
+			h_sec = 0;
+			l_hrs = 0;
+			l_min = 0;
+			l_sec = 0;
+			SharedPreferences settings = getSharedPreferences(pref, 0);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putInt("h_hrs", h_hrs).commit();
+			editor.putInt("h_min", h_min).commit();
+			editor.putInt("h_sec", h_sec).commit();
+			editor.putInt("l_hrs", l_hrs).commit();
+			editor.putInt("l_min", l_min).commit();
+			editor.putInt("l_sec", l_sec).commit();
+			String heavy_display = String.valueOf(h_hrs) + "h " + String.valueOf(h_min) 
+					+ "m " + String.valueOf(h_sec) + "s";
+			String light_display = String.valueOf(l_hrs) + "h " + String.valueOf(l_min) 
+					+ "m " + String.valueOf(l_sec) + "s";
+			heavyHour.setText(heavy_display);
+			lightHour.setText(light_display);
+			dataLogging.setText("The raining status time has been cleared.");
+		}	
+		
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		if(isChecked) {
+			checked = isChecked;
+			 try {
+                 connectBluetooth(); //connect to bluetooth device
+                 startBluetooth(); //start recieving data from device
+                 Log.i(TAG, "BT connection");
+             } catch (Exception ex) { }
+         } else {
+        	 try {
+        		 disconnectBluetooth(); //disconnect from bluetooth               	
+        	 	}
+        	 catch (IOException ex) { }
+        }
+	}
 }

@@ -4,5 +4,13 @@
     <string name="app_name">SmartWiper</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    
+    <string name="bt_status_lbl_txt">Bluetooth</string>
+    <string name="heavy_rain_lbl_txt">Heavy Rain</string>
+    
+    <string name="record_btn_txt">Record</string>
+    <string name="clear_btn_txt">Clear</string>
+    
+    
 
 </resources>
