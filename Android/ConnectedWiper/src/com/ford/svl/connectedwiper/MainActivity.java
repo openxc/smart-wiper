@@ -87,7 +87,7 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         
         status 	  = (TextView) findViewById(R.id.status);
         heavyRain = (TextView) findViewById(R.id.heavyRain);
