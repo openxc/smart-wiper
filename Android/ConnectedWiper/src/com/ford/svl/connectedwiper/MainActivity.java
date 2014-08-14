@@ -22,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.annotation.SuppressLint;
@@ -46,6 +47,8 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
 	private TextView lightRain;
 	private TextView lightHour;
 	private TextView dataLogging;
+	
+	private ImageView rainStatusImg;
 	
     private Button clearButton;
     private Button recordButton;
@@ -84,7 +87,7 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_main);
+        setContentView(R.layout.activity_main2);
         
         status 	  = (TextView) findViewById(R.id.status);
         heavyRain = (TextView) findViewById(R.id.heavyRain);
@@ -94,6 +97,8 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
         wiperStatus = (TextView) findViewById(R.id.wiper);
         dataLogging = (TextView) findViewById(R.id.dataLogging);
     	btStatus    = (TextView) findViewById(R.id.btStatus);
+    	
+    	rainStatusImg = (ImageView)findViewById(R.id.rain_status_img);
     	
     	bt = (Switch)  findViewById(R.id.bluetooth); 
     	bt.setOnCheckedChangeListener(this);
@@ -322,6 +327,7 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
                                         						String.valueOf(h_min) + "m " + 
                                         						String.valueOf(h_sec) + "s";
                                         		heavyHour.setText(heavy_display);
+                                        		rainStatusImg.setBackgroundResource(R.drawable.heavy_rain);
                                         		SharedPreferences settings = getSharedPreferences(pref, 0);
                                         		SharedPreferences.Editor editor = settings.edit();
                                         		editor.putInt("h_hrs", h_hrs).commit();
@@ -342,12 +348,15 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
                                         		String light_display = String.valueOf(l_hrs) + "h " + 
                                         						String.valueOf(l_min) + "m " + 
                                         						String.valueOf(l_sec) + "s";
+                                        		rainStatusImg.setBackgroundResource(R.drawable.light_rain);
                                         		lightHour.setText(light_display);
                                         		SharedPreferences settings = getSharedPreferences(pref, 0);
                                         		SharedPreferences.Editor editor = settings.edit();
                                         		editor.putInt("l_hrs", l_hrs).commit();
                                         		editor.putInt("l_min", l_min).commit();
                                         		editor.putInt("l_sec", l_sec).commit();
+                                        	}else{
+                                        		rainStatusImg.setBackgroundResource(R.drawable.no_rain);
                                         	}
                                             Log.i(TAG, data);
                                         }
@@ -400,7 +409,11 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
                     // UI thread - we set the text of the WindshieldWiperStatus view to
                     // the latest value
                 	if(mVehicleManager != null) {
-                		wiperStatus.setText(""+speed);
+                		//wiperStatus.setText(""+speed);
+                		if(speed)
+                			wiperStatus.setText("ON");
+                		else
+                			wiperStatus.setText("OFF");
                 	}
                 }
             });
@@ -484,7 +497,9 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
         	 try {
         		 disconnectBluetooth(); //disconnect from bluetooth               	
         	 	}
-        	 catch (IOException ex) { }
+        	 catch (Exception ex) { 
+        		 Log.w(TAG, ""+ex.getLocalizedMessage());
+        	 }
         }
 	}
 }

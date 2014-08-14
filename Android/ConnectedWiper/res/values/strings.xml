@@ -7,9 +7,19 @@
     
     <string name="bt_status_lbl_txt">Bluetooth</string>
     <string name="heavy_rain_lbl_txt">Heavy Rain</string>
+    <string name="light_rain_lbl_txt">Light Rain</string>
+    
+    <string name="heavy_rain_hour_value_text">0.00</string>
+    <string name="light_rain_hour_value_text">0.00</string>
+        
     
     <string name="record_btn_txt">Record</string>
     <string name="clear_btn_txt">Clear</string>
+    <string name="openxc_wiper_status_lbl_txt">Openxc-wiper</string>
+     <string name="openxc_wiper_status_value_txt">Off</string>
+     
+     <string name="img_description_txt">Raining status</string>
+     <string name="default_rain_status_txt">No Rain</string>
     
     
 
