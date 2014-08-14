@@ -67,13 +67,14 @@ In order to assemble the box, follow these steps:
 
 ## **Arduino**
 
-Note: The app best supports normal screens (4-6 inches) and large screens(7 inches) only. Before making any bluetooth connection to the smart-wiper-box, users should pair their wiper device with the mobile device using the android bluetooth settings section on the mobile device.
 Once all the electronics are soldered and placed, we will upload the firmware on to the Arduino. To upload the firmware you need a FTDI cable, that has a standard male USB on its other end. More information can be found on the Arduino's website on how to upload a program on the [Arduino Pro Mini](http://arduino.cc/en/Guide/ArduinoProMini).
 
 The Arduino firmware calculates and sends the information about the current state of the wiper to an Android device over Bluetooth. The Arduino receives the raw acceleration data from the Triple-Axis Accelerometer and calculates the variances along the three axes and determines whether the wiper is turned ON/OFF. More details on the algorithm and the scope is discussed in details [here](https://github.com/openxc/smart-wiper/tree/master/Arduino)
 
 
 ## **Android**
+
+Note: The app best supports normal screens (4-6 inches) and large screens(7 inches) only. Before making any bluetooth connection to the smart-wiper-box, users should pair their wiper device with the mobile device using the android bluetooth settings section on the mobile device.
 
 The primary purpose of the Android application is to get the sensor data from the Smart-Wiper Box via Bluetooth. In order to use the application, first go into the Bluetooth Setting of your android device, and pair it to the Arduino in the Smart-Wiper Box. 
 
