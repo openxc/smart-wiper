@@ -45,9 +45,9 @@
 
             <ImageView
                 android:id="@+id/rain_status_img"
-                android:layout_width="wrap_content"
+                android:layout_width="350dp"
                 android:layout_gravity="center"
-            	android:layout_height="wrap_content"
+            	android:layout_height="250dp"
                 android:background="@drawable/no_rain"
                 android:contentDescription="@string/img_description_txt" />
 
@@ -60,7 +60,7 @@
         		android:layout_width="fill_parent"
         		android:gravity="center_horizontal"
         		android:text="@string/default_rain_status_txt"
-        		android:textSize="40sp"  style="@style/general_style"/>
+        		android:textSize="60sp"  style="@style/general_style"/>
         </LinearLayout>
         
         <LinearLayout  android:orientation="horizontal"
