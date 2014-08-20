@@ -21,6 +21,8 @@
      <string name="img_description_txt">Raining status</string>
      <string name="default_rain_status_txt">No Rain</string>
     
-    
+    <color name="red_color">#660000</color>
+    <color name="green_color">#336600</color>
+    <color name="black_color">#000000</color>
 
 </resources>

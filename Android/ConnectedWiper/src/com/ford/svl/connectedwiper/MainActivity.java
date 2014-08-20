@@ -1,10 +1,5 @@
 package com.ford.svl.connectedwiper;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Set;
-import java.util.UUID;
 
 import com.openxc.VehicleManager;
 import com.openxc.measurements.Measurement;
@@ -14,7 +9,7 @@ import com.openxc.remote.VehicleServiceException;
 
 import android.text.format.Time;
 import android.os.Bundle;
-import android.os.Handler;
+
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
@@ -25,28 +20,38 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.annotation.SuppressLint;
+
 import android.app.Activity;
 import android.bluetooth.*;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+
 
 public class MainActivity extends Activity implements OnClickListener, OnCheckedChangeListener {
 	
 	public static final String TAG = MainActivity.class.getSimpleName();
 	
+	private MainActivity mainActivity;
+	
+	public static final String DEFAULT_PREFERENCE = "record_preference";
+	public SharedPreferences settings;
+	
+	private static final String USER_DATA_DIR = "user_record";
+	private static final String DAILY_DATA_DIR = "daily_record";
+	
+	
 	private TextView status;
 	private TextView btStatus;
-	@SuppressWarnings("unused")
-	private TextView heavyRain;
 	private TextView heavyHour;
-	@SuppressWarnings("unused")
-	private TextView lightRain;
 	private TextView lightHour;
 	private TextView dataLogging;
+	
+	private View switchLayout;
 	
 	private ImageView rainStatusImg;
 	
@@ -55,24 +60,15 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
     
 	private Switch bt;
 	
-	private BluetoothAdapter mBluetoothAdapter;
-	private BluetoothSocket socket;
-	private BluetoothDevice device;
-	private OutputStream outputStream;
-	private InputStream inputStream;
-	private Thread workerThread;
-	
-    byte[] readBuffer;
-    int readBufferPosition;
-    int counter;
-    volatile boolean stopWorker;
+	private BluetoothConnection btConnection;
+
 	private VehicleManager mVehicleManager;
-	TextView wiperStatus;
-	String filename = "wiper_data";
-    FileManager fileManager = new FileManager("wiper_data");
-    FileManager user_record = new FileManager("user_record");
-    FileManager record = new FileManager("daily_record");
-    boolean checked = false;
+	private TextView wiperStatus;
+
+    private FileManager user_record = new FileManager(USER_DATA_DIR);
+    private FileManager record = new FileManager(DAILY_DATA_DIR);
+    
+    boolean checked;
 
     int h_hrs = 0;
     int h_min = 0;
@@ -80,7 +76,7 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
     int l_hrs = 0;
     int l_min = 0;
     int l_sec = 0;
-    public static final String pref = "record";
+
     Time rightnow;
     int time_record = 0;
     
@@ -90,13 +86,13 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
         setContentView(R.layout.activity_main);
         
         status 	  = (TextView) findViewById(R.id.status);
-        heavyRain = (TextView) findViewById(R.id.heavyRain);
     	heavyHour = (TextView) findViewById(R.id.heavyHour);
-    	lightRain = (TextView) findViewById(R.id.lightRain);
     	lightHour = (TextView) findViewById(R.id.lightHour); 
         wiperStatus = (TextView) findViewById(R.id.wiper);
         dataLogging = (TextView) findViewById(R.id.dataLogging);
     	btStatus    = (TextView) findViewById(R.id.btStatus);
+    	
+    	switchLayout = (View)findViewById(R.id.switch_layout);
     	
     	rainStatusImg = (ImageView)findViewById(R.id.rain_status_img);
     	
@@ -109,7 +105,7 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
     	recordButton = (Button) findViewById(R.id.recordButton);
     	recordButton.setOnClickListener(this);
     	   	
-    	SharedPreferences settings = getSharedPreferences(pref, 0);
+    	settings = getSharedPreferences(DEFAULT_PREFERENCE, 0);
     	h_hrs = settings.getInt("h_hrs", 0);
     	h_min = settings.getInt("h_min", 0);
     	h_sec = settings.getInt("h_sec", 0);
@@ -122,6 +118,10 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
 		heavyHour.setText(heavy_display);
 		lightHour.setText(light_display);
 		
+		mainActivity = this;
+		btConnection = new BluetoothConnection(getApplicationContext(), mainActivity);
+		
+		this.registerReceiver(receiver, IntentFilterForMainActivity.getIntentFilters());
 		timeAdjustment();
 /*	*/
 
@@ -133,6 +133,7 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
     	/*if(mVehicleManager == null) {
 			bindService(new Intent(this, VehicleManager.class), mConnection, Context.BIND_AUTO_CREATE);
 		}*/
+    	
     	if(mVehicleManager == null) {
             Intent intent = new Intent(this, VehicleManager.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -146,8 +147,7 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
         if(mVehicleManager != null) {
             Log.i(TAG, "Unbinding from Vehicle Manager");
             try {
-                // Remember to remove your listeners, in typical Android
-                // fashion.
+                // Remember to remove your listeners, in typical Android fashion.
                 mVehicleManager.removeListener(WindshieldWiperStatus.class, wiperListener);
             } catch (VehicleServiceException e) {
                 e.printStackTrace();
@@ -162,6 +162,7 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
     	super.onDestroy();
     	if(mVehicleManager != null) {
     		Log.i("openxc", "Unbinding from VehicleManager");
+    		unregisterReceiver(receiver);
     		unbindService(mConnection);
     		mVehicleManager = null;
     	}
@@ -188,7 +189,7 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
         	l_min = 0;
         	l_sec = 0;
         	time_record = rightnow.monthDay;
-        	SharedPreferences settings = getSharedPreferences(pref, 0);
+
      		SharedPreferences.Editor editor = settings.edit();
      		editor.putInt("h_hrs", h_hrs).commit();
      		editor.putInt("h_min", h_min).commit();
@@ -207,191 +208,6 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
 		}
     }
     
-    /*Connects to bluetooth device
-     * 
-     * Checks to see if android device is BT compatible
-     * Enables Bluetooth on android device
-     * Connects to a previously paired device with the specified name
-     * 
-     */
-    void connectBluetooth() {
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-       
-        //Check to see if device is bluetooth capable
-        if(mBluetoothAdapter == null) {
-            btStatus.setText("No bluetooth adapter available");
-        }
-        
-        //Enable bluetooth if it is not already enabled
-        if(!mBluetoothAdapter.isEnabled()) {
-            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBluetooth, 0);
-        }
-        
-        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-        if(pairedDevices.size() > 0) {
-        	
-            for(BluetoothDevice device : pairedDevices) {
-            	
-                if(device.getName().equals("RNBT-6DEC")) //This is the name of the bluetooth device you want to connect to 
-                {
-                    this.device = device;
-                    break;
-                }
-            }
-        }
-        btStatus.setText("Device paired, not connected");
-    	
-    }
-    
-    
-    /*Starts bluetooth connection
-     * 
-     * Creates a bluetooth socket, then connects to the device specified using that socket.
-     * Starts recieving data
-     * 
-     */
-    @SuppressLint("NewApi") void startBluetooth() throws IOException
-    {
-        UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //Standard SerialPortService ID
-        socket = device.createRfcommSocketToServiceRecord(uuid); //Create the socket 
-        Log.i(TAG, "Socket: " + socket);
-        socket.connect();
-        Log.i(TAG, "Connected? " + socket.isConnected());
-        outputStream = socket.getOutputStream();
-        inputStream = socket.getInputStream();
-        
-        recieveData();
-        
-        
-        btStatus.setText("Bluetooth Opened");
-    }
-    
-    /*Handles received data
-     * 
-     * Fills a buffer with the incoming bytes from the arduino, convert the bytes into a string
-     * Set the textview above the input box to display the incoming data
-     * 
-     */
-    void recieveData()
-    {
-        final Handler handler = new Handler(); 
-        final byte delimiter = 10; //This is the ASCII code for a newline character
-        
-        stopWorker = false;
-        readBufferPosition = 0;
-        readBuffer = new byte[1024]; //size of the buffer
-        workerThread = new Thread(new Runnable()  {
-            public void run() {  
-            // sniff for data being exchanged on a seperate thread
-               while(!Thread.currentThread().isInterrupted() && !stopWorker) {
-                    try {
-                        int bytesAvailable = inputStream.available();                        
-                        if(bytesAvailable > 0) {
-                            byte[] packetBytes = new byte[bytesAvailable];
-                            inputStream.read(packetBytes); //read the incoming bytes
-                            for(int i=0;i<bytesAvailable;i++) {
-                                byte b = packetBytes[i];
-                                if(b == delimiter) {
-                                    byte[] encodedBytes = new byte[readBufferPosition]; //save the recieved data in an array
-                                    System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length); 
-                                    final String data = new String(encodedBytes, "US-ASCII");
-                                    Time now = new Time(Time.getCurrentTimezone());
-                            		now.setToNow();
-                                    fileManager.writeToFile(now.toString() + "   " + data +"\n");
-                                    MainActivity.this.runOnUiThread(new Runnable(){
-
-										@Override
-										public void run() {
-											dataLogging.setText("The raining status data log is being stored in the wiper_data.txt file in Downloads");
-										}});
-                                    
-                                    readBufferPosition = 0;
-                                    
-                                    handler.post(new Runnable() {
-                                        public void run() {                  
-                                        	status.setText(data);
-                                        	CharSequence cs = status.getText();
-                                        	// the signal is "Heavy Rain"
-                                        	if (cs.charAt(0) == 'H') {
-                                        		h_sec += 5;
-                                        		if (h_sec == 60) {
-                                        			h_min++;
-                                        			h_sec = 0;
-                                        			if (h_min == 60) {
-                                        				h_hrs++;
-                                        				h_min = 0;
-                                        			}
-                                        		}
-                                        		String heavy_display = String.valueOf(h_hrs) + "h " + 
-                                        						String.valueOf(h_min) + "m " + 
-                                        						String.valueOf(h_sec) + "s";
-                                        		heavyHour.setText(heavy_display);
-                                        		rainStatusImg.setBackgroundResource(R.drawable.heavy_rain);
-                                        		SharedPreferences settings = getSharedPreferences(pref, 0);
-                                        		SharedPreferences.Editor editor = settings.edit();
-                                        		editor.putInt("h_hrs", h_hrs).commit();
-                                        		editor.putInt("h_min", h_min).commit();
-                                        		editor.putInt("h_sec", h_sec).commit();
-                                        	} 
-                                        	// the signal is "Light Rain"
-                                        	else if (cs.charAt(0) == 'L') {
-                                        		l_sec += 5;
-                                        		if (l_sec == 60) {
-                                        			l_min++;
-                                        			l_sec = 0;
-                                        			if (l_min == 60) {
-                                        				l_hrs++;
-                                        				l_min = 0;
-                                        			}
-                                        		}
-                                        		String light_display = String.valueOf(l_hrs) + "h " + 
-                                        						String.valueOf(l_min) + "m " + 
-                                        						String.valueOf(l_sec) + "s";
-                                        		rainStatusImg.setBackgroundResource(R.drawable.light_rain);
-                                        		lightHour.setText(light_display);
-                                        		SharedPreferences settings = getSharedPreferences(pref, 0);
-                                        		SharedPreferences.Editor editor = settings.edit();
-                                        		editor.putInt("l_hrs", l_hrs).commit();
-                                        		editor.putInt("l_min", l_min).commit();
-                                        		editor.putInt("l_sec", l_sec).commit();
-                                        	}else{
-                                        		rainStatusImg.setBackgroundResource(R.drawable.no_rain);
-                                        	}
-                                            Log.i(TAG, data);
-                                        }
-                                    });
-                                }
-                                else {
-                                    readBuffer[readBufferPosition++] = b;
-                                }
-                            }
-                        }
-                    } catch (IOException ex) {
-                        stopWorker = true;
-                    }
-               }
-            }
-        });
-        workerThread.start();
-    }
-  
-    
-    /*Closes all of the connections and disconnect from the device
-     * 
-     * Stops the worker thread that is sniffing for data
-     * Closes the I/O streams and the socket
-     *      
-     */
-    void disconnectBluetooth() throws IOException {
-        stopWorker = true; 
-        if(socket.isConnected()) {
-	        outputStream.close();
-	        inputStream.close();
-	        socket.close();
-       }
-        btStatus.setText("Bluetooth Closed");
-    }
     
     WindshieldWiperStatus.Listener wiperListener = new WindshieldWiperStatus.Listener() {
 	    boolean speed  = false;
@@ -465,7 +281,7 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
 			l_hrs = 0;
 			l_min = 0;
 			l_sec = 0;
-			SharedPreferences settings = getSharedPreferences(pref, 0);
+			
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putInt("h_hrs", h_hrs).commit();
 			editor.putInt("h_min", h_min).commit();
@@ -489,17 +305,82 @@ public class MainActivity extends Activity implements OnClickListener, OnChecked
 		if(isChecked) {
 			checked = isChecked;
 			 try {
-                 connectBluetooth(); //connect to bluetooth device
-                 startBluetooth(); //start recieving data from device
+			 
+				 Thread thread = new Thread(new Runnable(){
+					@Override
+					public void run() {
+						try {
+							btConnection.startBluetooth("RNBT-6DEC");
+						} catch (Exception e) {
+							Log.e(TAG, ""+e.getLocalizedMessage());
+							e.printStackTrace();
+						}
+					}});
+				 thread.start();
+				 thread.join();
+				 btConnection.recieveData();
                  Log.i(TAG, "BT connection");
-             } catch (Exception ex) { }
+             } catch (Exception ex) { 
+            	 Log.e(TAG, ""+ex.getLocalizedMessage());
+             }
          } else {
         	 try {
-        		 disconnectBluetooth(); //disconnect from bluetooth               	
-        	 	}
-        	 catch (Exception ex) { 
+        		 btConnection.disconnect();
+        	 	} catch (Exception ex) { 
         		 Log.w(TAG, ""+ex.getLocalizedMessage());
         	 }
         }
 	}
+	
+	public TextView getBtStatus() {
+		return btStatus;
+	}
+
+	public TextView getStatus() {
+		return status;
+	}
+	
+
+	public TextView getHeavyHour() {
+		return heavyHour;
+	}
+	
+
+	public TextView getLightHour() {
+		return lightHour;
+	}
+	
+
+	public TextView getDataLogging() {
+		return dataLogging;
+	}
+	
+	public ImageView getRainStatusImg() {
+		return rainStatusImg;
+	}
+	
+	private BroadcastReceiver receiver = new BroadcastReceiver(){
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+
+			if(intent.getAction().equals(BluetoothDevice.ACTION_ACL_CONNECTED)){
+				btStatus.setText("Connected");
+				switchLayout.setBackgroundResource(R.color.green_color);
+			}else if(intent.getAction().equals(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED)){
+				btStatus.setText("Disconnecting...");
+			}else if(intent.getAction().equals(BluetoothDevice.ACTION_ACL_DISCONNECTED)){
+				btStatus.setText("Disconnected");
+				switchLayout.setBackgroundResource(R.color.black_color);
+			}else if(intent.getAction().equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)){
+				btStatus.setText("Pairing status changing...");
+			}else if(intent.getAction().equals(BluetoothDevice.ACTION_FOUND)){
+				btStatus.setText("Discovered device...");
+			}else if(intent.getAction().equals(BluetoothAdapter.ACTION_DISCOVERY_STARTED)){
+				btStatus.setText("Searching for devices...");
+			}else if(intent.getAction().equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)){
+				btStatus.setText("Finished earching for devices...");
+				
+			}
+		}};
 }

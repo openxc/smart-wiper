@@ -6,21 +6,24 @@
               android:layout_height="fill_parent">
               
     
-        <LinearLayout  android:orientation="horizontal"
+       <LinearLayout   android:id="@+id/switch_layout"
         		  	   android:layout_width="fill_parent"
                   	   android:layout_height="wrap_content">
                   	   
             <Switch
         		android:id="@+id/bluetooth"
-        		android:layout_weight="2"
-        		android:text="@string/bt_status_lbl_txt"  style="@style/general_style"/>
-            <TextView
-        		android:id="@+id/btStatus"
-        		android:layout_width="0dp"
-        		android:layout_weight="1"
         		android:layout_height="wrap_content"
-        		android:layout_marginBottom ="10dp"
-        		android:layout_marginTop="10dp"
+        		android:layout_width="wrap_content"
+        		android:text="@string/bt_status_lbl_txt"  style="@style/general_style"/>
+        </LinearLayout>
+        
+       <LinearLayout  android:orientation="horizontal"
+        		  	   android:layout_width="fill_parent"
+                  	   android:layout_height="wrap_content">
+             <TextView
+        		android:id="@+id/btStatus"
+        		android:layout_width="match_parent"
+        		android:layout_height="wrap_content"
         		android:textColor="#F5F5F5"
         		android:textSize="20sp" />
         </LinearLayout>
