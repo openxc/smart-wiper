@@ -373,6 +373,14 @@ public class MainActivity extends Activity implements OnClickListener,
 							btConnection.startBluetooth("RNBT-6DEC");
 						} catch (Exception e) {
 							Log.e(TAG, "" + e.getLocalizedMessage());
+							MainActivity.this.runOnUiThread(new Runnable(){
+
+								@Override
+								public void run() {
+									bt.setChecked(false);
+									btStatus.setText("Bluetooth connection error");	
+								}});
+							
 							e.printStackTrace();
 						}
 					}

@@ -123,7 +123,7 @@ public class BluetoothConnection {
         workerThread = new Thread(new Runnable()  {
             public void run() {  
             // sniff for data being exchanged on a separate thread
-               while(!Thread.currentThread().isInterrupted() && !stopWorker) {
+               while(!Thread.currentThread().isInterrupted() && !stopWorker && inputStream != null) {
                     try {
                         int bytesAvailable = inputStream.available();                        
                         if(bytesAvailable > 0) {
@@ -137,10 +137,9 @@ public class BluetoothConnection {
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     Time now = new Time(Time.getCurrentTimezone());
                             		now.setToNow();
-//                                    fileManager.writeToFile(now.toString() + ",   " 
-//                            		        + mainActivity.getLatitude() + (char) 0x00B0 + ",   " 
-//                                    		+ mainActivity.getLongitude() + (char) 0x00B0 + ",   " 
-//                            		        + data + "\n");
+                                    fileManager.writeToFile(now.toString() + ",   " 
+                           		        + mainActivity.getLatitude() + (char) 0x00B0 + ",   " 
+                                    		+ mainActivity.getLongitude() + (char) 0x00B0 + ",   " + data + "\n");
                                     mainActivity.runOnUiThread(new Runnable(){
 										@Override
 										public void run() {
