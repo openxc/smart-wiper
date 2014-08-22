@@ -27,7 +27,7 @@ public class BluetoothConnection {
 	private OutputStream outputStream;
 	private InputStream inputStream;
 	
-	FileManager fileManager = new FileManager("wiper_data");
+	FileManager fileManager = new FileManager("wiper_data.txt");
 	
 	private Context context;
 	private MainActivity mainActivity;
@@ -122,7 +122,7 @@ public class BluetoothConnection {
         readBuffer = new byte[1024]; //size of the buffer
         workerThread = new Thread(new Runnable()  {
             public void run() {  
-            // sniff for data being exchanged on a seperate thread
+            // sniff for data being exchanged on a separate thread
                while(!Thread.currentThread().isInterrupted() && !stopWorker) {
                     try {
                         int bytesAvailable = inputStream.available();                        
@@ -137,7 +137,10 @@ public class BluetoothConnection {
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     Time now = new Time(Time.getCurrentTimezone());
                             		now.setToNow();
-                                    fileManager.writeToFile(now.toString() + "   " + data +"\n");
+//                                    fileManager.writeToFile(now.toString() + ",   " 
+//                            		        + mainActivity.getLatitude() + (char) 0x00B0 + ",   " 
+//                                    		+ mainActivity.getLongitude() + (char) 0x00B0 + ",   " 
+//                            		        + data + "\n");
                                     mainActivity.runOnUiThread(new Runnable(){
 										@Override
 										public void run() {
