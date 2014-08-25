@@ -24,6 +24,8 @@ public class BluetoothConnection {
 	private BluetoothSocket socket;
 	private BluetoothDevice device;
 	
+	private boolean isConnected;
+	
 	private OutputStream outputStream;
 	private InputStream inputStream;
 	
@@ -63,6 +65,15 @@ public class BluetoothConnection {
 		
 	}
 	
+		
+	public boolean isConnected() {
+		return isConnected;
+	}
+
+	public void setConnected(boolean isConnected) {
+		this.isConnected = isConnected;
+	}
+
 	private BluetoothDevice getASpecificBTDevice(String deviceName) throws Exception {
 
         //Check to see if device is Bluetooth capable
@@ -106,9 +117,12 @@ public class BluetoothConnection {
         	socket.connect();
         	inputStream = socket.getInputStream();
         	outputStream = socket.getOutputStream();
+        	setConnected(true);
         	return socket;
         }catch(Exception e){
+        	setConnected(false);
         	throw new IOException("Opening bluetooth socket failed...");
+        	
         }
     }
 	
@@ -229,6 +243,7 @@ public class BluetoothConnection {
 						outputStream.close();
 						inputStream.close();
 				        socket.close();
+				        setConnected(false);
 					} catch (IOException e) {
 						Log.e(TAG, ""+e.getLocalizedMessage());
 						e.printStackTrace();

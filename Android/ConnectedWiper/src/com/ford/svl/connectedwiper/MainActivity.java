@@ -387,7 +387,8 @@ public class MainActivity extends Activity implements OnClickListener,
 				});
 				thread.start();
 				thread.join();
-				btConnection.recieveData();
+				if(btConnection.isConnected())
+					btConnection.recieveData();
 				Log.i(TAG, "BT connection");
 			} catch (Exception ex) {
 				Log.e(TAG, "" + ex.getLocalizedMessage());
