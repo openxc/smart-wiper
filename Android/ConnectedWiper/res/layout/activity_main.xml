@@ -43,7 +43,7 @@
         		android:text="@string/openxc_wiper_status_value_txt" style="@style/general_style"/>
         </LinearLayout>
         
-        <LinearLayout android:layout_width="match_parent"
+        <LinearLayout android:layout_width="fill_parent"
     				  android:layout_height="wrap_content"
     				  android:orientation="vertical">
 

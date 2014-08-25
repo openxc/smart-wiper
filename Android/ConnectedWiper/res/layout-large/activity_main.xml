@@ -48,7 +48,7 @@
 
             <ImageView
                 android:id="@+id/rain_status_img"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_gravity="center"
             	android:layout_height="250dp"
                 android:background="@drawable/no_rain"
